@@ -61,12 +61,10 @@ public class GameObject {
     }
 
     public GameObject(String objectName,int xPos, int yPos) { // 함수 오버라이딩
-
         this.objectCount = 1;
         this.strName = objectName;
         this.xPos = xPos; // 설정위치
         this.yPos = yPos;
-
     }
 
 }

@@ -14,6 +14,23 @@ public class GameMap {
         colRange = mapSize[0].length; // 가로
         mapObject =  new String[rowRange][colRange]; // 기본 네모칸
     }
+    public void conflictCheck(Mob mob, int x, int y){
+        if(mapObject[y][x].equals("♨")) { //  지뢰인 경우
+            clearScreen();
+            System.out.println("사망");
+            System.exit(0);
+
+        }
+        if(mapObject[y][x].equals("♬")) { //  지뢰인 경우
+            clearScreen();
+            mob.objectCount = mob.objectCount*5;
+
+        }
+    }
+    public static void clearScreen() {
+        for (int i = 0; i < 80; i++)
+            System.out.println("");
+    }
     public void deleteObject(int x, int y){
         mapObject[y][x]="□";
     }
@@ -38,6 +55,7 @@ public class GameMap {
         int[] mobGet_yPos = new int[rowRange];
 
         System.out.println("※ 몬스터 좌표");
+
         for(int t=0;t<mobCount;t++) {
             mobGet_xPos[t] = Integer.parseInt(mob.object_xPos.get(t).toString());
             mobGet_yPos[t] = Integer.parseInt(mob.object_yPos.get(t).toString());
@@ -49,6 +67,7 @@ public class GameMap {
             System.out.print( ",\t"+ mobGet_yPos[t]+")" );
             System.out.println();
         }
+
         System.out.println("---------------------------");
         System.out.println("↑: 유저, ♨: 지뢰, ♬: 아이템");
         System.out.println("---------------------------");
