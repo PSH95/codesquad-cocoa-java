@@ -2,7 +2,7 @@ package com.example.Day5;
 
 
 //TODO. 9개의 서로 다른 자연수가 주어질 때, 이들 중 최댓값을 찾고 그 최댓값이 몇 번째 수인지를 구하는 프로그램을 작성
-// 하 결과는 나오지만..런타임에러..
+//O 2번째 시도 : 배열 사용 X
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,23 +25,21 @@ public class BOJ_2562_FindMax {
 
     public static void main(String[] args) {
 
-        int[] number = new int[9];
-        for(int i=0;i<number.length;i++) {
-            number[i] = InputNumber();
-        }
-
-        int temp = 0;
+        int maxValue=0;
         int index = 0;
-        for(int i=0;i<number.length-1;i++) {
-            if(temp<number[i]){
-                temp = number[i];
+
+        for(int i=0;i<9;i++) {
+            int number = 0;
+            number = InputNumber();
+
+            if(maxValue < number) {
+                maxValue = number;
                 index = i+1;
             }
+
         }
-
-        System.out.println(temp);
+        System.out.println(maxValue);
         System.out.println(index);
-
     }
 
 }
