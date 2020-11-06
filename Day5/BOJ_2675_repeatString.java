@@ -13,16 +13,24 @@ public class BOJ_2675_repeatString {
 
         int testCaseNum = Integer.parseInt(buff.readLine());
 
-        String InputData= buff.readLine();
 
-        int idx = InputData.indexOf(" ");
+        //for(int i = 0; i<testCaseNum;i++) {
 
-        int repeatCount = Integer.parseInt(InputData.substring(0,idx));
-        String InputStr = InputData.substring(idx+1);
+            String InputData = buff.readLine();
+            int idx = InputData.indexOf(" ");
 
-        System.out.println(testCaseNum);
-        System.out.println(repeatCount);
-        System.out.println(InputStr);
+            int repeatCount = Integer.parseInt(InputData.substring(0, idx));
+            String InputStr = InputData.substring(idx + 1);
+
+            for(int i=0;i<InputStr.length();i++) {
+                for (int j = 0; j < repeatCount; j++) {
+                    System.out.print(InputStr.charAt(i));
+                }
+            }
+            System.out.println();
+
+
+        //}
 
 
     }
