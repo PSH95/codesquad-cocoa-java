@@ -1,5 +1,7 @@
 package com.example.Day5;
 
+// TODO. 문자열 S를 입력받은 후에, 각 문자를 R번 반복해 새 문자열 P를 만든 후 출력하는 프로그램을 작성하시오.
+// TODO. 즉, 첫 번째 문자를 R번 반복하고, 두 번째 문자를 R번 반복하는 식으로 P를 만들면 된다. S에는 QR Code "alphanumeric" 문자만 들어있다.
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,26 +13,25 @@ public class BOJ_2675_repeatString {
 
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
 
-        int testCaseNum = Integer.parseInt(buff.readLine());
+        int T = Integer.parseInt(buff.readLine()); // 테스트 케이스 개수
+        String newStr = "";
 
+        for (int i=0;i<T;i++) {
+            String[] InPutData = buff.readLine().split(" "); // 공백을 기준으로 짤라서 배열에 넣는다.
 
-        //for(int i = 0; i<testCaseNum;i++) {
+            int R = Integer.parseInt(InPutData[0]); // 문자 반복 횟수
 
-            String InputData = buff.readLine();
-            int idx = InputData.indexOf(" ");
-
-            int repeatCount = Integer.parseInt(InputData.substring(0, idx));
-            String InputStr = InputData.substring(idx + 1);
-
-            for(int i=0;i<InputStr.length();i++) {
-                for (int j = 0; j < repeatCount; j++) {
-                    System.out.print(InputStr.charAt(i));
+            for(int j=0;j<InPutData[1].length();j++)
+            {
+                for(int k=0;k<R;k++){
+                    newStr=newStr+InPutData[1].charAt(j);
                 }
             }
-            System.out.println();
-
-
-        //}
+            if(i<T-1) {
+                newStr = newStr + "\n";
+            }
+        }
+        System.out.println(newStr);
 
 
     }
