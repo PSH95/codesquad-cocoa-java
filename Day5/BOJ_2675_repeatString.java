@@ -14,25 +14,21 @@ public class BOJ_2675_repeatString {
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
 
         int T = Integer.parseInt(buff.readLine()); // 테스트 케이스 개수
-        String newStr = "";
 
         for (int i=0;i<T;i++) {
             String[] InPutData = buff.readLine().split(" "); // 공백을 기준으로 짤라서 배열에 넣는다.
 
             int R = Integer.parseInt(InPutData[0]); // 문자 반복 횟수
+            String S = InPutData[1]; // 문자열
 
-            for(int j=0;j<InPutData[1].length();j++)
+            for(int j=0;j<S.length();j++)
             {
                 for(int k=0;k<R;k++){
-                    newStr=newStr+InPutData[1].charAt(j);
+                    System.out.print(S.charAt(j));
                 }
             }
-            if(i<T-1) {
-                newStr = newStr + "\n";
-            }
+            System.out.println();
         }
-        System.out.println(newStr);
-
 
     }
 }
