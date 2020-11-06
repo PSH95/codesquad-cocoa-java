@@ -1,4 +1,4 @@
-package com.example.day1;
+package com.example.Day1;
 
 import java.io.BufferedReader;
 import java.io.IOException;

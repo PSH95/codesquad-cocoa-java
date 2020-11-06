@@ -1,4 +1,4 @@
-package com.example.day3;
+package com.example.Day3;
 
 public class Player extends GameObject {
 

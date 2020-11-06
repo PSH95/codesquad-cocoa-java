@@ -1,4 +1,4 @@
-package com.example.day1;
+package com.example.Day1;
 
 /*
    1330	두 수 비교하기
