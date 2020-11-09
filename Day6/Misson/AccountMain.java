@@ -39,37 +39,38 @@ public class AccountMain {
     }
     public static void Login(User user) throws IOException{
 
-        System.out.println("----- 로그인 -----");
-        System.out.print("1. 이름:");
-        String InputName = sc.nextLine();
-        System.out.println();
-        System.out.print("2. 비밀번호:");
-        String InputPassword = sc.nextLine();
-        boolean UserValidCheck = user.checkName(InputName) && user.checkName(InputPassword);
+        while(true) {
+            System.out.println("----- 로그인 -----");
+            System.out.print("1. 이름:");
+            String InputName = sc.nextLine();
+            System.out.println();
+            System.out.print("2. 비밀번호:");
+            String InputPassword = sc.nextLine();
+            boolean UserValidCheck = user.checkName(InputName) && user.checkName(InputPassword);
 
-        if(UserValidCheck){
-            System.out.println("\n▶ 로그인 완료");
-            AccountMenu(user); // 메인메뉴
-        } else{
-            System.out.println("\n▶ 존재하지 않는 계정");
+            if (UserValidCheck) {
+                System.out.println("\n▶ 로그인 완료");
+                AccountMenu(user); // 메인메뉴
+            } else {
+                System.out.println("\n▶ 존재하지 않는 계정");
+            }
         }
 
     }
     public static void InsertAccount(AccountData UserData) {
-        System.out.println();
+
+
         System.out.println("----- 가계부 등록 -----");
+        System.out.println();
         System.out.print("★ 날짜:");
         UserData.addDATE(sc.nextLine());
-        System.out.println();
         System.out.print("☆ 적요:");
         UserData.addCONTENTS(sc.nextLine());
-        System.out.println();
         System.out.print("★ 수입:");
         UserData.addINCOME(sc.nextInt());
-        System.out.println();
         System.out.print("☆ 지출:");
         UserData.addSPENDING(sc.nextInt());
-        System.out.println();
+
     }
 
     public static void AccountMenu(User user) {
@@ -95,6 +96,9 @@ public class AccountMain {
                     UserData.deleteAccountLog(sc.nextInt());
                     break;
                 case 3:
+                    UserData.accountLogPrint();
+                    System.out.println("♣ 수정을 원하는 번호를 입력하세요.");
+                    UserData.modifyFunction(sc.nextInt());
                     break;
                 case 4:
                     UserData.accountLogPrint();
