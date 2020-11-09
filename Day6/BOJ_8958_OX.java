@@ -25,11 +25,12 @@ public class BOJ_8958_OX {
 
                 if(InputSTR.charAt(j) == 'O') {
                     cnt = cnt+1;
+                    totalSUM += cnt;
                 }
                 else{
                     cnt = 0;
                 }
-                totalSUM += cnt;
+
             }
 
             sb.append(totalSUM).append('\n');
