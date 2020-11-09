@@ -38,7 +38,7 @@ public class BOJ_2920_Scale {
             System.out.println("ascending");
         }
         else if(decendingCNT == 8) {
-            System.out.println("decending");
+            System.out.println("descending");
         }
         else{
             System.out.println("mixed");
