@@ -20,7 +20,7 @@ public class BOJ_8958_OX {
 
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
         String InputSTR = "";
-
+        StringBuilder sb = new StringBuilder();
 
         int testCaseNum = Integer.parseInt(buff.readLine());
 
@@ -41,13 +41,12 @@ public class BOJ_8958_OX {
                 }
 
             }
-
             if(cnt !=0) {
                 totalSUM += seriesFunction(cnt);
             }
-            System.out.println(totalSUM);
+            sb.append(totalSUM).append('\n');
 
         }
-
+        System.out.println(sb);
     }
 }
