@@ -7,22 +7,13 @@ import java.io.InputStreamReader;
 public class BOJ_8958_OX {
 
 
-    public static int seriesFunction(int cnt){
-        if(cnt<=1){
-            return cnt;
-        }
-        else {
-            return cnt+seriesFunction(cnt-1);
-        }
-
-     }
     public static void main(String[] args) throws IOException {
 
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
         String InputSTR = "";
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); // 개별적인 출력 결과를 잇기 위한 스트링빌드
 
-        int testCaseNum = Integer.parseInt(buff.readLine());
+        int testCaseNum = Integer.parseInt(buff.readLine()); // 테스트케이스 개수
 
         for(int i=0;i<testCaseNum;i++) {
             int totalSUM = 0;
@@ -35,15 +26,12 @@ public class BOJ_8958_OX {
                 if(InputSTR.charAt(j) == 'O') {
                     cnt = cnt+1;
                 }
-                else if(InputSTR.charAt(j) == 'X'){
-                    totalSUM += seriesFunction(cnt);
+                else{
                     cnt = 0;
                 }
+                totalSUM += cnt;
+            }
 
-            }
-            if(cnt !=0) {
-                totalSUM += seriesFunction(cnt);
-            }
             sb.append(totalSUM).append('\n');
 
         }
