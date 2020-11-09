@@ -19,7 +19,8 @@ public class BOJ_2920_Scale {
         int InputNum;
         int ascendingCNT = 0;
         int decendingCNT = 0;
-        for(int i=0;i<9;i++) {
+
+        for(int i=0;i<8;i++) {
             InputNum = sc.nextInt();
 
             if(InputNum == ++preNum) {
@@ -32,16 +33,18 @@ public class BOJ_2920_Scale {
             }
 
         }
-        if(ascendingCNT == 9) {
+
+        if(ascendingCNT == 8) {
             System.out.println("ascending");
         }
-        else if(decendingCNT == 9) {
+        else if(decendingCNT == 8) {
             System.out.println("decending");
+        }
+        else{
+            System.out.println("mixed");
         }
 
         sc.close();
-
-
 
 
     }
