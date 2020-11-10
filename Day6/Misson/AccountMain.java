@@ -18,7 +18,7 @@ public class AccountMain {
 
     public static Scanner sc = new Scanner(System.in);
 
-    public static void Register(User user) throws IOException{
+    public static void Register(AccountUser accountUser) throws IOException{
 
         System.out.println("----- 회원가입 -----");
         System.out.print("1. 이름:");
@@ -26,18 +26,18 @@ public class AccountMain {
         System.out.println();
         System.out.print("2. 비밀번호:");
         String InputPassword = sc.nextLine();
-        boolean UserValidCheck = user.checkName(InputName) && user.checkName(InputPassword);
+        boolean UserValidCheck = accountUser.checkName(InputName) && accountUser.checkName(InputPassword);
 
         if(UserValidCheck){
             System.out.println("\n▶ 이미 존재하는 계정입니다.");
         } else{
-            user.setName(InputName);
-            user.setPassword(InputPassword);
+            accountUser.setName(InputName);
+            accountUser.setPassword(InputPassword);
             System.out.println("\n▶ 회원가입 완료");
         }
 
     }
-    public static void Login(User user) throws IOException{
+    public static void Login(AccountUser accountUser) throws IOException{
 
         while(true) {
             System.out.println("----- 로그인 -----");
@@ -46,35 +46,34 @@ public class AccountMain {
             System.out.println();
             System.out.print("2. 비밀번호:");
             String InputPassword = sc.nextLine();
-            boolean UserValidCheck = user.checkName(InputName) && user.checkName(InputPassword);
+            boolean UserValidCheck = accountUser.checkName(InputName) && accountUser.checkName(InputPassword);
 
             if (UserValidCheck) {
                 System.out.println("\n▶ 로그인 완료");
-                AccountMenu(user); // 메인메뉴
+                AccountMenu(accountUser); // 메인메뉴
             } else {
                 System.out.println("\n▶ 존재하지 않는 계정");
             }
         }
 
     }
-    public static void InsertAccount(AccountData UserData) {
-
+    public static void InsertAccount(AccountData accountLog) {
 
         System.out.println("----- 가계부 등록 -----");
         System.out.println();
         System.out.print("★ 날짜:");
-        UserData.addDATE(sc.nextLine());
+        accountLog.addDATE(sc.nextLine());
         System.out.print("☆ 적요:");
-        UserData.addCONTENTS(sc.nextLine());
+        accountLog.addCONTENTS(sc.nextLine());
         System.out.print("★ 수입:");
-        UserData.addINCOME(sc.nextInt());
+        accountLog.addINCOME(sc.nextInt());
         System.out.print("☆ 지출:");
-        UserData.addSPENDING(sc.nextInt());
+        accountLog.addSPENDING(sc.nextInt());
 
     }
 
-    public static void AccountMenu(User user) {
-        AccountData UserData = new AccountData();
+    public static void AccountMenu(AccountUser accountUser) {
+        AccountData accountLog = new AccountData();
 
         while(true) {
             System.out.println("----- 메뉴 -----");
@@ -88,20 +87,20 @@ public class AccountMain {
 
             switch (MenuInputKey) {
                 case 1:
-                    InsertAccount(UserData);
+                    InsertAccount(accountLog);
                     break;
                 case 2:
-                    UserData.accountLogPrint();
+                    accountLog.accountLogPrint();
                     System.out.println("♣ 삭제를 원하는 번호를 입력하세요.");
-                    UserData.deleteAccountLog(sc.nextInt());
+                    accountLog.deleteAccountLog(sc.nextInt());
                     break;
                 case 3:
-                    UserData.accountLogPrint();
+                    accountLog.accountLogPrint();
                     System.out.println("♣ 수정을 원하는 번호를 입력하세요.");
-                    UserData.modifyFunction(sc.nextInt());
+                    accountLog.modifyFunction(sc.nextInt());
                     break;
                 case 4:
-                    UserData.accountLogPrint();
+                    accountLog.accountLogPrint();
                     break;
                 default:
                     break;
@@ -111,7 +110,7 @@ public class AccountMain {
     }
     public static void main(String[] args) throws IOException {
 
-        User user = new User();
+        AccountUser accountUser = new AccountUser();
 
         System.out.println("가계부");
         System.out.println("1. 계정생성");
@@ -123,9 +122,9 @@ public class AccountMain {
 
         switch (MenuInputKey){
             case 1:
-                Register(user);
+                Register(accountUser);
             case 2:
-                Login(user);
+                Login(accountUser);
                 break;
             default:
                 break;

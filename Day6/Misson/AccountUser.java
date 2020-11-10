@@ -2,7 +2,7 @@ package com.example.Day6.Misson;
 
 import java.util.LinkedList;
 
-public class User {
+public class AccountUser {
 
     private LinkedList<String > NAME = new LinkedList<String>();
     private LinkedList<String > PASSWORD = new LinkedList<String>();
