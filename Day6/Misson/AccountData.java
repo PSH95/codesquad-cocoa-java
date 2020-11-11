@@ -1,15 +1,15 @@
 package com.example.Day6.Misson;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class AccountData {
 
     //0 계정마다 구분할 방법 아직 못찾음
 
-    private LinkedList<String > DATE = new LinkedList<String>();
-    private LinkedList<String > CONTENTS = new LinkedList<String>();
-    private LinkedList<Integer > INCOME = new LinkedList<Integer>();
-    private LinkedList<Integer > SPENDING = new LinkedList<Integer>();
+    private ArrayList<String > DATE = new ArrayList<String>();
+    private ArrayList<String > CONTENTS = new ArrayList<String>();
+    private ArrayList<Integer > INCOME = new ArrayList<Integer>();
+    private ArrayList<Integer > SPENDING = new ArrayList<Integer>();
 
     public void addDATE(String DATE){
         this.DATE.add(DATE);

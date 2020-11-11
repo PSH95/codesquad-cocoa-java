@@ -1,11 +1,11 @@
 package com.example.Day6.Misson;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
-public class AccountUser {
+public class AccountUser extends AccountData{
 
-    private LinkedList<String > NAME = new LinkedList<String>();
-    private LinkedList<String > PASSWORD = new LinkedList<String>();
+    private ArrayList<String > NAME = new ArrayList<String>();
+    private ArrayList<String > PASSWORD = new ArrayList<String>();
 
 
     public boolean checkName(String NAME){

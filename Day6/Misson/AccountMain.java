@@ -62,9 +62,9 @@ public class AccountMain {
         System.out.println("----- 가계부 등록 -----");
         System.out.println();
         System.out.print("★ 날짜:");
-        accountLog.addDATE(sc.nextLine());
+        accountLog.addDATE(sc.next());
         System.out.print("☆ 적요:");
-        accountLog.addCONTENTS(sc.nextLine());
+        accountLog.addCONTENTS(sc.next());
         System.out.print("★ 수입:");
         accountLog.addINCOME(sc.nextInt());
         System.out.print("☆ 지출:");
