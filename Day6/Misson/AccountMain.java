@@ -46,7 +46,7 @@ public class AccountMain {
             System.out.println();
             System.out.print("2. 비밀번호:");
             String InputPassword = sc.nextLine();
-            boolean UserValidCheck = accountLog.checkName(InputName) && accountLog.checkName(InputPassword);
+            boolean UserValidCheck = accountLog.checkName(InputName) && accountLog.checkPassword(InputPassword);
 
             if (UserValidCheck) {
                 System.out.println("\n▶ 로그인 완료");
@@ -59,24 +59,28 @@ public class AccountMain {
     }
     public static void InsertAccount(AccountDAO accountLog) {
 
+        StringBuilder sb = new StringBuilder(); // 개별적인 출력 결과를 잇기 위한 스트링빌드
+
         System.out.println("----- 가계부 등록 -----");
         System.out.println();
         System.out.print("★ 날짜:");
-        accountLog.addDATE(sc.next());
+        sb.append(sc.next()).append("/");
         System.out.print("☆ 적요:");
-        accountLog.addCONTENTS(sc.next());
+        sb.append(sc.next()).append("/");
         System.out.print("★ 수입:");
-        accountLog.addINCOME(sc.nextInt());
+        sb.append(sc.nextInt()).append("/");
         System.out.print("☆ 지출:");
         int inputSpending = sc.nextInt();
-        accountLog.addSPENDING(inputSpending);
+        sb.append(inputSpending).append("/");
 
         if (inputSpending>0) {
             System.out.print("☆ 소비유형 (현금/카드):");
             accountLog.addSPENDINGTYPE(sc.next());
         }
-        else
+        else {
             accountLog.addSPENDINGTYPE("X");
+        }
+        accountLog.createDataFile(accountLog.getName(),sb);
     }
 
     public static void AccountMenu(AccountDAO accountLog) {

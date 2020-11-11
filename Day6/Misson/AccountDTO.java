@@ -16,11 +16,14 @@ public class AccountDTO {
     public boolean checkName(String NAME){
         return this.NAME.equals(NAME);
     }
+    public boolean checkPassword(String PASSWORD){
+        return this.PASSWORD.equals(PASSWORD);
+    }
     public void setName(String NAME){
         this.NAME = NAME;
     }
     public void setPassword(String PASSWORD){
-        this.NAME = PASSWORD;
+        this.PASSWORD = PASSWORD;
     }
 
     public void addDATE(String DATE){
