@@ -18,7 +18,7 @@ public class AccountMain {
 
     public static Scanner sc = new Scanner(System.in);
 
-    public static void Register(AccountUser accountUser) throws IOException{
+    public static void Register(AccountDAO accountLog) throws IOException{
 
         System.out.println("----- 회원가입 -----");
         System.out.print("1. 이름:");
@@ -26,18 +26,18 @@ public class AccountMain {
         System.out.println();
         System.out.print("2. 비밀번호:");
         String InputPassword = sc.nextLine();
-        boolean UserValidCheck = accountUser.checkName(InputName) && accountUser.checkName(InputPassword);
+        boolean UserValidCheck = accountLog.checkName(InputName) && accountLog.checkName(InputPassword);
 
         if(UserValidCheck){
             System.out.println("\n▶ 이미 존재하는 계정입니다.");
         } else{
-            accountUser.setName(InputName);
-            accountUser.setPassword(InputPassword);
+            accountLog.setName(InputName);
+            accountLog.setPassword(InputPassword);
             System.out.println("\n▶ 회원가입 완료");
         }
 
     }
-    public static void Login(AccountUser accountUser) throws IOException{
+    public static void Login(AccountDAO accountLog) throws IOException{
 
         while(true) {
             System.out.println("----- 로그인 -----");
@@ -46,18 +46,18 @@ public class AccountMain {
             System.out.println();
             System.out.print("2. 비밀번호:");
             String InputPassword = sc.nextLine();
-            boolean UserValidCheck = accountUser.checkName(InputName) && accountUser.checkName(InputPassword);
+            boolean UserValidCheck = accountLog.checkName(InputName) && accountLog.checkName(InputPassword);
 
             if (UserValidCheck) {
                 System.out.println("\n▶ 로그인 완료");
-                AccountMenu(accountUser); // 메인메뉴
+                AccountMenu(accountLog); // 메인메뉴
             } else {
                 System.out.println("\n▶ 존재하지 않는 계정");
             }
         }
 
     }
-    public static void InsertAccount(AccountData accountLog) {
+    public static void InsertAccount(AccountDAO accountLog) {
 
         System.out.println("----- 가계부 등록 -----");
         System.out.println();
@@ -68,12 +68,18 @@ public class AccountMain {
         System.out.print("★ 수입:");
         accountLog.addINCOME(sc.nextInt());
         System.out.print("☆ 지출:");
-        accountLog.addSPENDING(sc.nextInt());
+        int inputSpending = sc.nextInt();
+        accountLog.addSPENDING(inputSpending);
 
+        if (inputSpending>0) {
+            System.out.print("☆ 소비유형 (현금/카드):");
+            accountLog.addSPENDINGTYPE(sc.next());
+        }
+        else
+            accountLog.addSPENDINGTYPE("X");
     }
 
-    public static void AccountMenu(AccountUser accountUser) {
-        AccountData accountLog = new AccountData();
+    public static void AccountMenu(AccountDAO accountLog) {
 
         while(true) {
             System.out.println("----- 메뉴 -----");
@@ -110,7 +116,7 @@ public class AccountMain {
     }
     public static void main(String[] args) throws IOException {
 
-        AccountUser accountUser = new AccountUser();
+        AccountDAO accountLog = new AccountDAO();
 
         System.out.println("가계부");
         System.out.println("1. 계정생성");
@@ -122,9 +128,9 @@ public class AccountMain {
 
         switch (MenuInputKey){
             case 1:
-                Register(accountUser);
+                Register(accountLog);
             case 2:
-                Login(accountUser);
+                Login(accountLog);
                 break;
             default:
                 break;
