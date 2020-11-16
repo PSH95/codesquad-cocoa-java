@@ -21,6 +21,7 @@ public class hangulClock {
         final int hour = 0;
         final int minute = 1;
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
         String[] strTime = timeFormat.format(System.currentTimeMillis()).split(":");
 
         List<String> hangul_Clock_List= new ArrayList<>();
@@ -98,113 +99,114 @@ public class hangulClock {
                     hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 3:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("세"), "(세)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("세"), colorPrint("세"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 4:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("네"), "(네)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("네"), colorPrint("네"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 5:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("다"), "(다)");
-                    hangul_Clock_List.set(5, "(섯)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("다"), colorPrint("다"));
+                    hangul_Clock_List.set(5, colorPrint("섯"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 6:
-                    hangul_Clock_List.set(6, "(여)");
-                    hangul_Clock_List.set(7, "(섯)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(6, colorPrint("여"));
+                    hangul_Clock_List.set(7, colorPrint("섯"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 7:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("일"), "(일)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("곱"), "(곱)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("일"), colorPrint("일"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("곱"), colorPrint("곱"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 8:
-                    hangul_Clock_List.set(10, "(여)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("덟"), "(덟)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(10, colorPrint("여"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("덟"), colorPrint("덟"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 9:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("아"), "(아)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("홉"), "(홉)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("아"), colorPrint("아"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("홉"), colorPrint("홉"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 10:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("열"), "(열)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("열"), colorPrint("열"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 11:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("열"), "(열)");
-                    hangul_Clock_List.set(15, "(한)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("열"), colorPrint("열"));
+                    hangul_Clock_List.set(15, colorPrint("한"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
                 case 12:
                 case 0:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("열"), "(열)");
-                    hangul_Clock_List.set(16, "(두)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), "(시)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("열"), colorPrint("열"));
+                    hangul_Clock_List.set(16, colorPrint("두"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("시"), colorPrint("시"));
                     break;
             }
 
+
             switch (nTensMinute) {
                 case 1:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), "(십)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
                     break;
                 case 2:
-                    hangul_Clock_List.set(19, "(이)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), "(십)");
+                    hangul_Clock_List.set(19, colorPrint("이"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
                     break;
                 case 3:
-                    hangul_Clock_List.set(20, "(삼)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), "(십)");
+                    hangul_Clock_List.set(20, colorPrint("삼"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
                     break;
                 case 4:
-                    hangul_Clock_List.set(21, "(사)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), "(십)");
+                    hangul_Clock_List.set(21, colorPrint("사"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
                     break;
                 case 5:
-                    hangul_Clock_List.set(22, "(오)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), "(십)");
+                    hangul_Clock_List.set(22, colorPrint("오"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
                     break;
             }
 
             switch (nUnitMinute) {
                 case 1:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("일"), "(일)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), "(분)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("일"), colorPrint("일"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
                     break;
                 case 2:
-                    hangul_Clock_List.set(26, "(이)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), "(분)");
+                    hangul_Clock_List.set(26, colorPrint("이"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
                     break;
                 case 3:
-                    hangul_Clock_List.set(27, "(삼)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), "(분)");
+                    hangul_Clock_List.set(27, colorPrint("삼"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
                     break;
                 case 4:
-                    hangul_Clock_List.set(28, "(사)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), "(분)");
+                    hangul_Clock_List.set(28, colorPrint("사"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
                     break;
                 case 5:
-                    hangul_Clock_List.set(31, "(오)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), "(분)");
+                    hangul_Clock_List.set(31, colorPrint("오"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
                     break;
                 case 6:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("육"), "(육)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), "(분)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("육"), colorPrint("육"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
                     break;
                 case 7:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("칠"), "(칠)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), "(분)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("칠"), colorPrint("칠"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
                     break;
                 case 8:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("팔"), "(팔)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), "(분)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("팔"), colorPrint("팔"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
                     break;
                 case 9:
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("구"), "(구)");
-                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), "(분)");
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("구"), colorPrint("구"));
+                    hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
                     break;
 
 
@@ -217,7 +219,7 @@ public class hangulClock {
             if(i%6 ==0) {
                 System.out.println();
             }
-            System.out.print(String.format("%5s",hangul_Clock_List.get(i)));
+            System.out.print(String.format("%s",hangul_Clock_List.get(i)));
 
         }
         System.out.println();
