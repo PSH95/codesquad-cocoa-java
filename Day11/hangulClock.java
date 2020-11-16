@@ -1,19 +1,20 @@
 package com.example.Day11;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class hangulClock {
 
-    private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     private static final String ANSI_GREEN = "\u001B[32m"; //m 색상 변경
     private static final String ANSI_RESET = "\u001B[0m";
     private static final int HourMax = 12;
-    private static final int hour = 0;
-    private static final int minute = 1;
-
-
+    private static final int hourPOS = 0;
+    private static final int minutePOS = 1;
+    private static Scanner sc = new Scanner(System.in);
+    private static int nHour;
+    private static int nTensMinute;
+    private static int nUnitMinute;
 
     private static String colorPrint(String msg){
         String color_msg = ANSI_GREEN+msg+ANSI_RESET;
@@ -58,17 +59,30 @@ public class hangulClock {
         hangul_Clock_List.add("분");
     }
 
+    private static void InsertTime(){
+        System.out.print("\n▶ 한글시계의 시간을 입력하세요. ");
+        String[] strTime = sc.nextLine().split(":"); //m 입력값 :을 기준으로 hour,minute 부분이 나뉨
+
+        nHour = Integer.parseInt(strTime[hourPOS]); //m 시간,
+        nTensMinute = Integer.parseInt(strTime[minutePOS]) / 10; //m 분, 10의자리
+        nUnitMinute = Integer.parseInt(strTime[minutePOS]) % 10; //m 분,  1의자리
+
+        if (nHour > HourMax) { //m 13시,14시.. 등 12시를 넘는경우
+            nHour = nHour - HourMax;  //m 시간-12
+            strTime[hourPOS] = Integer.toString(nHour);
+        }
+
+    }
     private static void chNightNoonToKor(int nHour, List<String> hangul_Clock_List){
         switch (nHour) {
             case 0:
-                hangul_Clock_List.set(hangul_Clock_List.indexOf("자"), "(자)");
-                hangul_Clock_List.set(24, "(정)");
+                hangul_Clock_List.set(hangul_Clock_List.indexOf("자"), colorPrint("자"));
                 break;
             case 12:
-                hangul_Clock_List.set(24, "(정)");
-                hangul_Clock_List.set(30, "(오)");
+                hangul_Clock_List.set(30, colorPrint("오"));
                 break;
         }
+        hangul_Clock_List.set(24, colorPrint("정"));
     }
     private static void chHourToKor(int nHour, List<String> hangul_Clock_List){
         switch (nHour) {
@@ -123,20 +137,26 @@ public class hangulClock {
     private static void chTensMinuteToKor(int nTensMinute, List<String> hangul_Clock_List){
 
         switch (nTensMinute) {
+            case 1: //m 십의 자리가 존재하지 않을 수 있으므로, 공통으로 빼지 않고 중복해서 사용함.
+                hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
             case 2:
                 hangul_Clock_List.set(19, colorPrint("이"));
+                hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
                 break;
             case 3:
                 hangul_Clock_List.set(20, colorPrint("삼"));
+                hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
                 break;
             case 4:
                 hangul_Clock_List.set(21, colorPrint("사"));
+                hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
                 break;
             case 5:
                 hangul_Clock_List.set(22, colorPrint("오"));
+                hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
                 break;
         }
-        hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
+
     }
     private static void chUnitMinuteToKor(int nUnitMinute, List<String> hangul_Clock_List) {
 
@@ -187,30 +207,23 @@ public class hangulClock {
 
     public static void main(String[] args) {
 
-        String[] strTime = timeFormat.format(System.currentTimeMillis()).split(":");;
-        List<String> hangul_Clock_List= new ArrayList<>();
-        ListInsert(hangul_Clock_List);
+        List<String> hangul_Clock_List = new ArrayList<>();
+        ListInsert(hangul_Clock_List); //m 리스트에 한글 시계 기본 요소 삽입
 
-        System.out.println("★ 현재시간: "+strTime[hour]+"시 "+strTime[minute]+"분");
+        while (true) {
+            hangul_Clock_List.clear(); //m 과거 한글시계 기록 삭제
+            ListInsert(hangul_Clock_List); //m 리스트에 한글 시계 기본 요소 삽입
+            InsertTime();
+            if (nTensMinute == 0 && nUnitMinute == 0) { //m 자정, 정오를 검사하는 조건문
+                chNightNoonToKor(nHour, hangul_Clock_List); //m 한글시계 요소값 변경
+            } else { //m 자정, 정오가 아닐 경우
+                chHourToKor(nHour, hangul_Clock_List); //m 한글시계 '시간' 요소값 변경
+                chTensMinuteToKor(nTensMinute, hangul_Clock_List); //m 한글시계 '십' 의자리 '분' 요소값 변경
+                chUnitMinuteToKor(nUnitMinute, hangul_Clock_List); //m 한글시계 '일' 의자리 '분' 요소값 변경
+            }
 
-        int nHour =Integer.parseInt(strTime[hour]); //m 시간,
-        int nTensMinute =Integer.parseInt(strTime[minute])/10; //m 분, 10의자리
-        int nUnitMinute =Integer.parseInt(strTime[minute])%10; //m 분,  1의자리
-
-        if(nHour>HourMax) { //m 13시,14시.. 등 12시를 넘는경우
-            nHour = nHour - HourMax;  //m 시간-12
-            strTime[hour] = Integer.toString(nHour) ;
+            printClock(hangul_Clock_List); //m 한글 시계 출력
         }
 
-        if(nTensMinute == 0 && nUnitMinute ==0){ //m 자정, 정오를 검사하는 조건문
-            chNightNoonToKor(nHour,hangul_Clock_List);
-        }
-        else { //m 자정, 정오가 아닐 경우
-            chHourToKor(nHour,hangul_Clock_List);
-            chTensMinuteToKor(nTensMinute,hangul_Clock_List);
-            chUnitMinuteToKor(nUnitMinute,hangul_Clock_List);
-        }
-
-        printClock(hangul_Clock_List);
     }
 }
