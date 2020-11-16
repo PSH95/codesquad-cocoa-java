@@ -13,6 +13,19 @@ public class hangulClock {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         String[] strTime = timeFormat.format(System.currentTimeMillis()).split(":");
 
+        strTime[0] = "12";
+        strTime[1] = "50";
+        int nHour = Integer.parseInt(strTime[0]);
+        int nMinute = Integer.parseInt(strTime[1]);
+        int nTenMinute = nMinute/10;
+        int nUnitMinute = nMinute%10;
+
+
+        if(nHour>HourMax) {
+            nHour = nHour -HourMax;
+            strTime[0] = Integer.toString(nHour);
+        }
+
         List<String> hour = new ArrayList<>();
         List<String> tens_minute = new ArrayList<>();
         List<String> units_minute = new ArrayList<>();
@@ -32,13 +45,12 @@ public class hangulClock {
         hour.add("열 두");
 
 
-        tens_minute.add(".");
+        tens_minute.add(" ");
         tens_minute.add("십");
         tens_minute.add("이");
         tens_minute.add("삼");
         tens_minute.add("사");
         tens_minute.add("오");
-
 
 
         units_minute.add("분");
@@ -53,27 +65,16 @@ public class hangulClock {
         units_minute.add("구");
 
 
-        int nHour = Integer.parseInt(strTime[0]);
-        int nMinute = Integer.parseInt(strTime[1]);
-        int nTenMinute = nMinute/10;
-        int nUnitMinute = nMinute%10;
-
-        if(nHour>HourMax) {
-            nHour = nHour -HourMax;
-            strTime[0] = Integer.toString(nHour);
-        }
+        System.out.println("★ 현재시각: "+strTime[0]+":"+strTime[1]);
 
 
-        System.out.println(strTime[1]);
-        System.out.println(hour.get(nHour));
-        System.out.println(tens_minute.get(nTenMinute));
-        System.out.println(units_minute.get(nUnitMinute));
-
-        String[][] print = {
+        String[][] Hour_Kor_print = {
                 {"한", "두", "세", "네", "다", "섯"},
                 {"여", "섯", "일", "곱", "여", "덟"},
                 {"아", "홉", "열", "한", "두", "시"},
+        };
 
+       String[][] Minute_Kor_print = {
                 {"자", "이", "삼", "사", "오", "십"},
                 {"정", "일", "이", "삼", "사", "육"},
                 {"오", "오", "칠", "팔", "구", "분"},
@@ -82,10 +83,43 @@ public class hangulClock {
 
         System.out.println();
 
-        for(int y=0;y< print.length;y++) {
-            for(int x=0;x<print[0].length;x++){
+        for(int y=0;y< Hour_Kor_print.length;y++) {
+            for(int x=0;x<Hour_Kor_print[0].length;x++){
 
-                System.out.print(String.format("%3s\t",print[y][x]));
+                System.out.print(String.format("%3s\t",Hour_Kor_print[y][x]));
+            }
+            System.out.println();
+        }
+
+        for(int y=0;y< Minute_Kor_print.length;y++) {
+            for(int x=0;x<Minute_Kor_print[0].length;x++){
+
+                System.out.print(String.format("%3s\t",Minute_Kor_print[y][x]));
+            }
+            System.out.println();
+        }
+
+        System.out.println("================ ↓↓↓↓↓↓↓ ====================");
+
+
+
+        for(int y=0;y< Hour_Kor_print.length;y++) {
+            for(int x=0;x<Hour_Kor_print[0].length;x++){
+
+                if(nHour>10) {
+                    if(hour.get(nHour).charAt(2) == Hour_Kor_print[y][x].charAt(0) && y>0) // 한자리
+                        Hour_Kor_print[y][x]= "　";
+                }else if(nHour <10){
+                    if(hour.get(nHour).charAt(0) == Hour_Kor_print[y][x].charAt(0) && y==0){
+                        Hour_Kor_print[y][x]= "　";
+                    }
+                }
+
+                if(Hour_Kor_print[y][x].equals("시")) {
+
+                      Hour_Kor_print[y][x]= "　";
+                }
+                System.out.print(String.format("%3s\t",Hour_Kor_print[y][x]));
             }
             System.out.println();
         }
