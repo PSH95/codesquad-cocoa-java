@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class hangulClock {
 
-    private static final String ANSI_GREEN = "\u001B[32m"; //m 색상 변경
+    private static final String ANSI_GREEN = "\u001B[32m"; //m 콘솔 색상 변경 by 새리
     private static final String ANSI_RESET = "\u001B[0m";
     private static final int HourMax = 12;
     private static final int hourPOS = 0;
@@ -74,6 +74,7 @@ public class hangulClock {
 
     }
     private static void chNightNoonToKor(int nHour, List<String> hangul_Clock_List){
+        //m 리스트 set 수정함수와 리스트 indexOf 검색함수를 활용하여, 한글시계 요소 수정
         switch (nHour) {
             case 0:
                 hangul_Clock_List.set(hangul_Clock_List.indexOf("자"), colorPrint("자"));
@@ -191,7 +192,6 @@ public class hangulClock {
         }
         hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
     }
-
     private static void printClock(List<String> hangul_Clock_List){
         for(int i=0; i<hangul_Clock_List.size();i++)
         {
@@ -213,7 +213,8 @@ public class hangulClock {
         while (true) {
             hangul_Clock_List.clear(); //m 과거 한글시계 기록 삭제
             ListInsert(hangul_Clock_List); //m 리스트에 한글 시계 기본 요소 삽입
-            InsertTime();
+            InsertTime(); //m 시간 정보 수동 입려
+
             if (nTensMinute == 0 && nUnitMinute == 0) { //m 자정, 정오를 검사하는 조건문
                 chNightNoonToKor(nHour, hangul_Clock_List); //m 한글시계 요소값 변경
             } else { //m 자정, 정오가 아닐 경우
@@ -221,7 +222,6 @@ public class hangulClock {
                 chTensMinuteToKor(nTensMinute, hangul_Clock_List); //m 한글시계 '십' 의자리 '분' 요소값 변경
                 chUnitMinuteToKor(nUnitMinute, hangul_Clock_List); //m 한글시계 '일' 의자리 '분' 요소값 변경
             }
-
             printClock(hangul_Clock_List); //m 한글 시계 출력
         }
 
