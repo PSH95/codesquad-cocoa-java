@@ -53,7 +53,7 @@ public class hangulClock {
         tens_minute.add("오");
 
 
-        units_minute.add("분");
+        units_minute.add("십");
         units_minute.add("일");
         units_minute.add("이");
         units_minute.add("삼");
@@ -107,10 +107,10 @@ public class hangulClock {
             for(int x=0;x<Hour_Kor_print[0].length;x++){
 
                 if(nHour>10) {
-                    if(hour.get(nHour).charAt(2) == Hour_Kor_print[y][x].charAt(0) && y>0) // 한자리
+                    if((hour.get(nHour).charAt(2) == Hour_Kor_print[y][x].charAt(0) || hour.get(nHour).charAt(0) == Hour_Kor_print[y][x].charAt(0) )&& y>0)
                         Hour_Kor_print[y][x]= "　";
                 }else if(nHour <10){
-                    if(hour.get(nHour).charAt(0) == Hour_Kor_print[y][x].charAt(0) && y==0){
+                    if(hour.get(nHour).charAt(0) == Hour_Kor_print[y][x].charAt(0) && y==0){// 한자리
                         Hour_Kor_print[y][x]= "　";
                     }
                 }
@@ -120,6 +120,29 @@ public class hangulClock {
                       Hour_Kor_print[y][x]= "　";
                 }
                 System.out.print(String.format("%3s\t",Hour_Kor_print[y][x]));
+            }
+            System.out.println();
+        }
+
+        for(int y=0;y< Minute_Kor_print.length;y++) {
+            for(int x=0;x<Minute_Kor_print[0].length;x++){
+                if(Minute_Kor_print[y][x].equals("분")) {
+
+                    Minute_Kor_print[y][x]= "　";
+                }
+                if(nMinute<10){
+                    if(units_minute.get(nUnitMinute).charAt(0) == Minute_Kor_print[y][x].charAt(0) && y==2 && x==1){
+                        Minute_Kor_print[y][x]= "　";
+                    }
+
+                }else if(nMinute>10){
+                    if(( tens_minute.get(nTenMinute).charAt(0) == Minute_Kor_print[y][x].charAt(0) || units_minute.get(nUnitMinute).charAt(0) == Minute_Kor_print[y][x].charAt(0) )&& y==0){
+                        Minute_Kor_print[y][x]= "　";
+                    }
+
+                }
+
+                System.out.print(String.format("%3s\t",Minute_Kor_print[y][x]));
             }
             System.out.println();
         }
