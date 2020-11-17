@@ -20,6 +20,7 @@ public class hangulClock {
         String color_msg = ANSI_GREEN+msg+ANSI_RESET;
         return color_msg;
     }
+
     private static void ListInsert(List<String> hangul_Clock_List){
 
         //m 리스트에 6x6 한글시계 1차원으로 나열하여 삽입, 총 36개
@@ -213,12 +214,12 @@ public class hangulClock {
         List<String> hangul_Clock_List = new ArrayList<>();
         ListInsert(hangul_Clock_List); //m 리스트에 한글 시계 기본 요소 삽입
 
-        while (true) { //m 무한반복
+        while (true) { //m 무한반복  -> 추후 쓰레드를 이용해서 실시간으로 변화되게 할 계획
             hangul_Clock_List.clear(); //m 과거 한글시계 기록 삭제
             ListInsert(hangul_Clock_List); //m 리스트에 한글 시계 기본 요소 삽입
             InsertTime(); //m 시간 정보 수동 입려
 
-            if (nTensMinute == 0 && nUnitMinute == 0) { //m 자정, 정오를 검사하는 조건문
+            if ((nHour==12 || nHour==0) && nTensMinute == 0 && nUnitMinute == 0) { //m 자정, 정오를 검사하는 조건문
                 chNightNoonToKor(nHour, hangul_Clock_List); //m 한글시계 요소값 변경
             } else { //m 자정, 정오가 아닐 경우
                 chHourToKor(nHour, hangul_Clock_List); //m 한글시계 '시간' 요소값 변경
