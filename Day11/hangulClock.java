@@ -21,6 +21,9 @@ public class hangulClock {
         return color_msg;
     }
     private static void ListInsert(List<String> hangul_Clock_List){
+
+        //m 리스트에 6x6 한글시계 1차원으로 나열하여 삽입, 총 36개
+
         hangul_Clock_List.add("한");
         hangul_Clock_List.add("두");
         hangul_Clock_List.add("세");
@@ -62,7 +65,6 @@ public class hangulClock {
     private static void InsertTime(){
         System.out.print("\n▶ 한글시계의 시간을 입력하세요. ");
         String[] strTime = sc.nextLine().split(":"); //m 입력값 :을 기준으로 hour,minute 부분이 나뉨
-
         nHour = Integer.parseInt(strTime[hourPOS]); //m 시간,
         nTensMinute = Integer.parseInt(strTime[minutePOS]) / 10; //m 분, 10의자리
         nUnitMinute = Integer.parseInt(strTime[minutePOS]) % 10; //m 분,  1의자리
@@ -140,6 +142,7 @@ public class hangulClock {
         switch (nTensMinute) {
             case 1: //m 십의 자리가 존재하지 않을 수 있으므로, 공통으로 빼지 않고 중복해서 사용함.
                 hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
+                break;
             case 2:
                 hangul_Clock_List.set(19, colorPrint("이"));
                 hangul_Clock_List.set(hangul_Clock_List.indexOf("십"), colorPrint("십"));
@@ -210,7 +213,7 @@ public class hangulClock {
         List<String> hangul_Clock_List = new ArrayList<>();
         ListInsert(hangul_Clock_List); //m 리스트에 한글 시계 기본 요소 삽입
 
-        while (true) {
+        while (true) { //m 무한반복
             hangul_Clock_List.clear(); //m 과거 한글시계 기록 삭제
             ListInsert(hangul_Clock_List); //m 리스트에 한글 시계 기본 요소 삽입
             InsertTime(); //m 시간 정보 수동 입려
@@ -223,7 +226,7 @@ public class hangulClock {
                 chUnitMinuteToKor(nUnitMinute, hangul_Clock_List); //m 한글시계 '일' 의자리 '분' 요소값 변경
             }
             printClock(hangul_Clock_List); //m 한글 시계 출력
-        }
+        } //m while end
 
-    }
+    }//m main end
 }
