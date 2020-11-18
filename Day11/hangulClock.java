@@ -13,6 +13,7 @@ public class hangulClock {
     private static final int minutePOS = 1;
     private static Scanner sc = new Scanner(System.in);
     private static int nHour;
+    private static int nMinute;
     private static int nTensMinute;
     private static int nUnitMinute;
 
@@ -22,53 +23,22 @@ public class hangulClock {
     }
 
     private static void ListInsert(List<String> hangul_Clock_List){
-
         //m 리스트에 6x6 한글시계 1차원으로 나열하여 삽입, 총 36개
-
-        hangul_Clock_List.add("한");
-        hangul_Clock_List.add("두");
-        hangul_Clock_List.add("세");
-        hangul_Clock_List.add("네");
-        hangul_Clock_List.add("다");
-        hangul_Clock_List.add("섯");
-        hangul_Clock_List.add("여");
-        hangul_Clock_List.add("섯");
-        hangul_Clock_List.add("일");
-        hangul_Clock_List.add("곱");
-        hangul_Clock_List.add("여");
-        hangul_Clock_List.add("덟");
-        hangul_Clock_List.add("아");
-        hangul_Clock_List.add("홉");
-        hangul_Clock_List.add("열");
-        hangul_Clock_List.add("한");
-        hangul_Clock_List.add("두");
-        hangul_Clock_List.add("시");
-        hangul_Clock_List.add("자");
-        hangul_Clock_List.add("이");
-        hangul_Clock_List.add("삼");
-        hangul_Clock_List.add("사");
-        hangul_Clock_List.add("오");
-        hangul_Clock_List.add("십");
-        hangul_Clock_List.add("정");
-        hangul_Clock_List.add("일");
-        hangul_Clock_List.add("이");
-        hangul_Clock_List.add("삼");
-        hangul_Clock_List.add("사");
-        hangul_Clock_List.add("육");
-        hangul_Clock_List.add("오");
-        hangul_Clock_List.add("오");
-        hangul_Clock_List.add("칠");
-        hangul_Clock_List.add("팔");
-        hangul_Clock_List.add("구");
-        hangul_Clock_List.add("분");
+        hangul_Clock_List.add("한"); hangul_Clock_List.add("두"); hangul_Clock_List.add("세"); hangul_Clock_List.add("네"); hangul_Clock_List.add("다"); hangul_Clock_List.add("섯");
+        hangul_Clock_List.add("여"); hangul_Clock_List.add("섯"); hangul_Clock_List.add("일"); hangul_Clock_List.add("곱"); hangul_Clock_List.add("여"); hangul_Clock_List.add("덟");
+        hangul_Clock_List.add("아"); hangul_Clock_List.add("홉"); hangul_Clock_List.add("열"); hangul_Clock_List.add("한"); hangul_Clock_List.add("두"); hangul_Clock_List.add("시");
+        hangul_Clock_List.add("자"); hangul_Clock_List.add("이"); hangul_Clock_List.add("삼"); hangul_Clock_List.add("사"); hangul_Clock_List.add("오"); hangul_Clock_List.add("십");
+        hangul_Clock_List.add("정"); hangul_Clock_List.add("일"); hangul_Clock_List.add("이"); hangul_Clock_List.add("삼"); hangul_Clock_List.add("사"); hangul_Clock_List.add("육");
+        hangul_Clock_List.add("오"); hangul_Clock_List.add("오"); hangul_Clock_List.add("칠"); hangul_Clock_List.add("팔"); hangul_Clock_List.add("구"); hangul_Clock_List.add("분");
     }
 
     private static void InsertTime(){
         System.out.print("\n▶ 한글시계의 시간을 입력하세요. ");
         String[] strTime = sc.nextLine().split(":"); //m 입력값 :을 기준으로 hour,minute 부분이 나뉨
         nHour = Integer.parseInt(strTime[hourPOS]); //m 시간,
-        nTensMinute = Integer.parseInt(strTime[minutePOS]) / 10; //m 분, 10의자리
-        nUnitMinute = Integer.parseInt(strTime[minutePOS]) % 10; //m 분,  1의자리
+        nMinute = Integer.parseInt(strTime[minutePOS]); //m 분,
+        nTensMinute = nMinute / 10; //m 분, 10의자리
+        nUnitMinute = nMinute % 10; //m 분,  1의자리
 
         if (nHour > HourMax) { //m 13시,14시.. 등 12시를 넘는경우
             nHour = nHour - HourMax;  //m 시간-12
@@ -194,7 +164,9 @@ public class hangulClock {
                 hangul_Clock_List.set(hangul_Clock_List.indexOf("구"), colorPrint("구"));
                 break;
         }
-        hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
+        if(nMinute!=0) { // 11:00 와 같은때엔 '분'이 표시되면 안되므로
+            hangul_Clock_List.set(hangul_Clock_List.indexOf("분"), colorPrint("분"));
+        }
     }
     private static void printClock(List<String> hangul_Clock_List){
         for(int i=0; i<hangul_Clock_List.size();i++)
@@ -219,7 +191,7 @@ public class hangulClock {
             ListInsert(hangul_Clock_List); //m 리스트에 한글 시계 기본 요소 삽입
             InsertTime(); //m 시간 정보 수동 입려
 
-            if ((nHour==12 || nHour==0) && nTensMinute == 0 && nUnitMinute == 0) { //m 자정, 정오를 검사하는 조건문
+            if ((nHour==12 || nHour==0) && nMinute == 0) { //m 자정, 정오를 검사하는 조건문
                 chNightNoonToKor(nHour, hangul_Clock_List); //m 한글시계 요소값 변경
             } else { //m 자정, 정오가 아닐 경우
                 chHourToKor(nHour, hangul_Clock_List); //m 한글시계 '시간' 요소값 변경
