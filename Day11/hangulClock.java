@@ -2,7 +2,6 @@ package com.example.Day11;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class hangulClock {
 
@@ -11,8 +10,7 @@ public class hangulClock {
     private static final int HourMax = 12;
     private static final int hourPOS = 0;
     private static final int minutePOS = 1;
-    private static Scanner sc = new Scanner(System.in);
-    private static int nHour;
+    private static int nHour=11;
     private static int nMinute;
     private static int nTensMinute;
     private static int nUnitMinute;
@@ -33,16 +31,41 @@ public class hangulClock {
     }
 
     private static void InsertTime(){
-        System.out.print("\n▶ 한글시계의 시간을 입력하세요. ");
-        String[] strTime = sc.nextLine().split(":"); //m 입력값 :을 기준으로 hour,minute 부분이 나뉨
-        nHour = Integer.parseInt(strTime[hourPOS]); //m 시간,
-        nMinute = Integer.parseInt(strTime[minutePOS]); //m 분,
+
+       //m 키보드를 통해 시간 임의 지정
+       // Scanner sc = new Scanner(System.in);
+       // System.out.print("\n▶ 한글시계의 시간을 입력하세요. ");
+       // String[] strTime = sc.nextLine().split(":"); //m 입력값 :을 기준으로 hour,minute 부분이 나뉨
+
+
+        //m 현재시간을 불러오는 코드
+        //SimpleDateFormat timeFormat = new SimpleDateFormat ( "HH:mm");
+        //String[] strTime = timeFormat.format (System.currentTimeMillis()).split(":"); //m 입력값 :을 기준으로 hour,minute 부분이 나뉨
+
+        //nHour = Integer.parseInt(strTime[hourPOS]); //m 시간,
+        //nMinute = Integer.parseInt(strTime[minutePOS]); //m 분,
+        //nTensMinute = nMinute / 10; //m 분, 10의자리
+        //nUnitMinute = nMinute % 10; //m 분,  1의자리
+
+        // if (nHour > HourMax) { //m 13시,14시.. 등 12시를 넘는경우
+        //    nHour = nHour - HourMax;  //m 시간-12
+        //    strTime[hourPOS] = Integer.toString(nHour);
+        //}
+
+
+        //m 빠른 시간변화를 보기 위해 만든 임시코드
+
+        if(nMinute == 60) {
+            nMinute =0;
+            nHour = ++nHour; //m 시간,
+        }
+        nMinute = ++nMinute; //m 분,
+
         nTensMinute = nMinute / 10; //m 분, 10의자리
         nUnitMinute = nMinute % 10; //m 분,  1의자리
 
         if (nHour > HourMax) { //m 13시,14시.. 등 12시를 넘는경우
             nHour = nHour - HourMax;  //m 시간-12
-            strTime[hourPOS] = Integer.toString(nHour);
         }
 
     }
@@ -181,6 +204,10 @@ public class hangulClock {
 
     }
 
+    public static void clearConsole() {
+        for (int i = 0; i < 50; ++i) System.out.println();
+    }
+
     public static void main(String[] args) {
 
         List<String> hangul_Clock_List = new ArrayList<>();
@@ -199,6 +226,14 @@ public class hangulClock {
                 chUnitMinuteToKor(nUnitMinute, hangul_Clock_List); //m 한글시계 '일' 의자리 '분' 요소값 변경
             }
             printClock(hangul_Clock_List); //m 한글 시계 출력
+
+            try{
+                Thread.sleep(500);
+                clearConsole();
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+
         } //m while end
 
     }//m main end

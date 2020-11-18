@@ -11,7 +11,7 @@ public class IO_Practice {
 
         String name = "홍길동";
         try (BufferedOutputStream bs = new BufferedOutputStream(new FileOutputStream("C:/Users/psh/Desktop/data/"+name+".txt",true))) { // true 일 경우 이어쓰기
-            String str = "2/아이스크림/0/10000/현금\r\n";
+            String str = "3/아이스크림/0/10000/현금\r\n";
             bs.write(str.getBytes()); // 바이트형
 
         } catch (Exception e) {

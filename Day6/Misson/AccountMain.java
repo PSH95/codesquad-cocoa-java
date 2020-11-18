@@ -60,6 +60,7 @@ public class AccountMain {
     public static void InsertAccount(AccountDAO accountLog) {
 
         StringBuilder sb = new StringBuilder(); // 개별적인 출력 결과를 잇기 위한 스트링빌드
+        sb.delete(0,sb.length()); // 스트링빌더 초기화
 
         System.out.println("----- 가계부 등록 -----");
         System.out.println();
@@ -110,7 +111,7 @@ public class AccountMain {
                     accountLog.modifyFunction(sc.nextInt());
                     break;
                 case 4:
-                    accountLog.accountLogPrint();
+                    accountLog.readDataFile(accountLog.getName());
                     break;
                 default:
                     break;
