@@ -6,10 +6,14 @@ import java.awt.event.WindowEvent;
 
 public class awtPractice extends Frame {
 
+    static final Dimension res = Toolkit.getDefaultToolkit().getScreenSize(); // 해상도 불러오는 함수
+
     public void initFrame(){
+
         setSize(500,500);
         setVisible(true);
-        setLocation(this.getWidth()/2,this.getHeight()/2);
+        System.out.println(this.getWidth());
+        setLocation(res.width/2-this.getWidth()/2,res.height/2-this.getHeight()/2); // 절반의 해상도에서 프레임 크기의 절반을 빼줘야 정중앙으로 옮길 수 있다.
     }
 
     public awtPractice(){
