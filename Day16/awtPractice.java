@@ -7,6 +7,16 @@ import java.awt.event.WindowEvent;
 public class awtPractice extends Frame {
 
     static final Dimension res = Toolkit.getDefaultToolkit().getScreenSize(); // 해상도 불러오는 함수
+    private MenuBar menuBar;
+    private Menu menuFile; // 파일 메뉴
+    private Menu menuEdit; // 편집 메뉴
+    private Menu menuView; // 보기 메뉴
+    private Menu menuHelp; // 도움말 메뉴
+
+    private MenuItem menuFileNew; // 새로만들기
+    private MenuItem menuFileOpen; // 파일 열기
+
+
 
     public void initFrame(){
 
@@ -31,6 +41,28 @@ public class awtPractice extends Frame {
         area.add(b2);
 
         this.add(area,"North");
+
+        this.menuBar = new MenuBar();
+        this.setMenuBar(this.menuBar);
+
+        this.menuFile = new Menu ("파일(F)");
+        this.menuBar.add(this.menuFile);
+
+        this.menuEdit = new Menu ("편집(E)");
+        this.menuBar.add(this.menuEdit);
+
+        this.menuView = new Menu ("보기(V)");
+        this.menuBar.add(this.menuView);
+
+        this.menuHelp = new Menu ("도움말(H)");
+        this.menuBar.add(this.menuHelp);
+
+        this.menuFileNew = new MenuItem("새로 만들기(N)");
+        this.menuFile.add(this.menuFileNew);
+
+        this.menuFileOpen = new MenuItem("파일 열기(O)");
+        this.menuFile.add(this.menuFileOpen);
+
         this.setVisible(true);
     }
 
