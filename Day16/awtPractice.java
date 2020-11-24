@@ -10,10 +10,28 @@ public class awtPractice extends Frame {
 
     public void initFrame(){
 
-        setSize(500,500);
+        setSize(res.width/2,res.height/2);
         setVisible(true);
-        System.out.println(this.getWidth());
         setLocation(res.width/2-this.getWidth()/2,res.height/2-this.getHeight()/2); // 절반의 해상도에서 프레임 크기의 절반을 빼줘야 정중앙으로 옮길 수 있다.
+
+        FlowLayout fl = new FlowLayout();
+        fl.setAlignment(FlowLayout.CENTER);
+        this.setLayout(fl);
+
+        Panel area = new Panel();
+        area.setBackground(Color.BLACK);
+        area.setLocation(50,520);
+
+        Button b1 = new Button("테스트");
+        b1.setPreferredSize(new Dimension(160, 40)); // 버튼 크기 설정
+        Button b2 = new Button("테스트2");
+        b2.setPreferredSize(new Dimension(160, 40)); // 버튼 크기 설정
+
+        area.add(b1);
+        area.add(b2);
+
+        this.add(area,"North");
+        this.setVisible(true);
     }
 
     public awtPractice(){
@@ -25,6 +43,7 @@ public class awtPractice extends Frame {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+
                 awtPractice fr = new awtPractice();
 
                 fr.addWindowListener(new WindowAdapter() {
@@ -37,6 +56,7 @@ public class awtPractice extends Frame {
                         System.exit(0);  //프로그램을 종료하다.
                     }
                 });
+
 
             }
         });
