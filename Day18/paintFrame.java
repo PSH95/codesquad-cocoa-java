@@ -9,12 +9,12 @@ public class paintFrame extends JFrame {
     private int startY = 0;
     private int endX = 0;
     private int endY = 0;
-    private Color selColor;
+    private Color selColor = Color.BLACK;
     private int selThick = 5;
     Graphics g;
     public static Graphics2D g2D;
 
-    public static int ToolStatus = 0;
+    public static int ToolStatus = 1;
     private final int Pen = 1;
     private final int Erase = 2;
     private final int Rect = 3;
@@ -34,6 +34,7 @@ public class paintFrame extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null); //m 정중앙으로 옮겨주는 메소드
         setLayout(new BorderLayout());
+
 
         makeMenu();
         makeButton();
@@ -79,6 +80,9 @@ public class paintFrame extends JFrame {
     }
     private void makeButton() {
 
+
+
+
         Panel p = new Panel();
         p.setLayout(new GridLayout(1,7));
         p.setBackground(Color.cyan);
@@ -93,6 +97,8 @@ public class paintFrame extends JFrame {
         Button btSelColor = new Button("색상변경");
         Button btSelThick= new Button("굵기변경");
 
+        btSelColor.setBackground(selColor);
+
         btDrawPencil.addActionListener(new btAction());
         btDrawRect.addActionListener(new btAction());
         btDrawEllipse.addActionListener(new btAction());
@@ -100,6 +106,7 @@ public class paintFrame extends JFrame {
         btErase.addActionListener(new btAction());
 
         btDrawRect.setPreferredSize(new Dimension(100,100));
+
 
         p.add(btDrawPencil);
         p.add(btErase);
@@ -109,6 +116,9 @@ public class paintFrame extends JFrame {
         p.add(btDrawLine);
         p.add(btSelColor);
         p.add(btSelThick);
+
+       // p.add(colorStatus);
+
 
 
         Panel p2 = new Panel();
@@ -144,6 +154,7 @@ public class paintFrame extends JFrame {
                 JColorChooser chooser = new JColorChooser(); // 색 선택
                 selColor = chooser.showDialog(null, "색상 변경", Color.ORANGE);
                 g2D.setColor(selColor);
+                btSelColor.setBackground(selColor);
             }
         });
 
