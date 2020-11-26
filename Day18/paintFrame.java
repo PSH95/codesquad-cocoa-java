@@ -74,7 +74,7 @@ public class paintFrame extends JFrame {
 
 
         Menu mEdit = new Menu("편집(E)");
-        MenuItem mAllDelete = new MenuItem("모두 지우기");
+        MenuItem mAllDelete = new MenuItem("모두지우기");
         mEdit.add(mAllDelete);
 
         menuBar.add(mFile);
@@ -85,6 +85,7 @@ public class paintFrame extends JFrame {
         mAllDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 repaint();
 
             }
@@ -99,14 +100,14 @@ public class paintFrame extends JFrame {
         p.setBackground(Color.cyan);
 
 
-        JButton btDrawPencil= new JButton("연필");
-        JButton btDrawRect= new JButton("사각형");
-        JButton btDrawEllipse = new JButton("원");
-        JButton btDrawLine = new JButton("직선");
+        JButton btDrawPencil= new JButton();
+        JButton btDrawRect= new JButton();
+        JButton btDrawEllipse = new JButton();
+        JButton btDrawLine = new JButton();
 
-        JButton btErase = new JButton("지우개");
+        JButton btErase = new JButton();
         JButton btSelColor = new JButton();
-        JButton btSelThick= new JButton ("두께");
+        JButton btSelThick= new JButton ();
 
 
 
@@ -153,7 +154,8 @@ public class paintFrame extends JFrame {
         selectGame.add("5");
         selectGame.setFont(new Font("Serif", Font.PLAIN, 30));
 
-        JButton btSelectImage = new JButton("확인");
+        JButton btSelectImage = new JButton("선택");
+        btSelectImage.setFont(new Font("Serif", Font.PLAIN, 30));
         btSelectImage.setPreferredSize(new Dimension(20,20));
 
         btSelectImage.addActionListener(new ActionListener() {
@@ -227,6 +229,22 @@ public class paintFrame extends JFrame {
             }
         });
 
+        ImageIcon iconPen = new ImageIcon("./resource/icon/pencil.png");
+        ImageIcon iconErase = new ImageIcon("./resource/icon/eraser.png");
+        ImageIcon iconRect = new ImageIcon("./resource/icon/rectangle.png");
+        ImageIcon iconCircle = new ImageIcon("./resource/icon/circle.png");
+        ImageIcon iconLine= new ImageIcon("./resource/icon/line.png");
+        ImageIcon iconColor= new ImageIcon("./resource/icon/painting.png");
+        ImageIcon iconThick= new ImageIcon("./resource/icon/width.png");
+
+        btDrawPencil.setIcon(iconPen);
+        btErase.setIcon(iconErase);
+        btDrawRect.setIcon(iconRect);
+        btDrawEllipse.setIcon(iconCircle);
+        btDrawLine.setIcon(iconLine);
+        btSelColor.setIcon(iconColor);
+        btSelThick.setIcon(iconThick);
+
         btDrawPencil.setFont(new Font("Serif", Font.PLAIN, 30));
         btDrawRect.setFont(new Font("Serif", Font.PLAIN, 30));
         btDrawRect.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -235,6 +253,7 @@ public class paintFrame extends JFrame {
         btErase.setFont(new Font("Serif", Font.PLAIN, 30));
         btSelColor.setFont(new Font("Serif", Font.PLAIN, 30));
         btSelThick.setFont(new Font("Serif", Font.PLAIN, 30));
+
 
     }
 
