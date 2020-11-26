@@ -140,8 +140,8 @@ public class paintFrame extends JFrame {
         p2.setLayout(new GridLayout(1,3));
         p2.setBackground(Color.yellow);
 
-        Label answerLabel = new Label("색칠 리스트");
-        answerLabel.setFont(new Font("Serif", Font.PLAIN, 30));
+        Label answerLabel = new Label("도안 리스트");
+        answerLabel.setFont(new Font("Serif", Font.BOLD, 30));
         answerLabel.setAlignment(Label.CENTER);
 
         Choice selectGame = new Choice();
@@ -244,8 +244,12 @@ public class paintFrame extends JFrame {
         btSelColor.setIcon(iconColor);
         btSelThick.setIcon(iconThick);
 
-        btSelColor.setFont(new Font("Serif", Font.PLAIN, 30));
-        btSelThick.setFont(new Font("Serif", Font.PLAIN, 30));
+        btDrawPencil.setFont(new Font("Serif", Font.BOLD, 20));
+        btDrawRect.setFont(new Font("Serif", Font.BOLD, 20));
+        btDrawRect.setFont(new Font("Serif", Font.BOLD, 20));
+        btDrawEllipse.setFont(new Font("Serif", Font.BOLD, 20));
+        btDrawLine.setFont(new Font("Serif", Font.BOLD, 20));
+        btErase.setFont(new Font("Serif", Font.BOLD, 20));
 
 
     }
