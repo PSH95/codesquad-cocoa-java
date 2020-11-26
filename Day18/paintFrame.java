@@ -13,13 +13,22 @@ public class paintFrame extends JFrame {
     Graphics g;
     public static Graphics2D g2D;
 
+    public static int ToolStatus = 0;
+    private final int Pen = 1;
+    private final int Erase = 2;
+    private final int Rect = 3;
+    private final int Ellipse = 4;
+    private final int Line = 5;
+
+
+
     static final Dimension res = Toolkit.getDefaultToolkit().getScreenSize(); // 해상도 불러오는 함수
 
     public void init(){
         setTitle("색칠공부");
         setSize(res.width/2,900);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBackground(Color.white);
+        getContentPane().setBackground( Color.white );   //m getContentPane()을 하니까 색변경이 됬다.. 왜지??? 찾아보기...
         setResizable(false);
         setVisible(true);
         setLocationRelativeTo(null); //m 정중앙으로 옮겨주는 메소드
@@ -27,7 +36,6 @@ public class paintFrame extends JFrame {
 
         makeMenu();
         makeButton();
-        makeSketchFrame();
 
         addEvent();
 
@@ -40,6 +48,7 @@ public class paintFrame extends JFrame {
     private void makeMenu() {
 
         MenuBar menuBar = new MenuBar();
+        menuBar.setFont(new Font("Serif", Font.PLAIN, 20));
 
         Menu mFile = new Menu("파일(F)");
         MenuItem mSave = new MenuItem("그림저장(S)");
@@ -48,15 +57,29 @@ public class paintFrame extends JFrame {
         mFile.add(mSave);
         mFile.add(mLoad);
 
+
+        Menu mEdit = new Menu("편집(E)");
+        MenuItem mAllDelete = new MenuItem("모두 지우기");
+        mEdit.add(mAllDelete);
+
         menuBar.add(mFile);
+        menuBar.add(mEdit);
 
         setMenuBar(menuBar);
+
+        mAllDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                repaint();
+
+            }
+        });
 
     }
     private void makeButton() {
 
         Panel p = new Panel();
-        p.setLayout(new GridLayout(1,8));
+        p.setLayout(new GridLayout(1,7));
         p.setBackground(Color.cyan);
 
 
@@ -64,7 +87,6 @@ public class paintFrame extends JFrame {
         Button btDrawRect= new Button("사각형");
         Button btDrawEllipse = new Button("원");
         Button btDrawLine = new Button("직선");
-        Button btDrawCurve = new Button("곡선");
 
         Button btErase = new Button("지우개");
         Button btSelColor = new Button("색상변경");
@@ -74,7 +96,6 @@ public class paintFrame extends JFrame {
         btDrawRect.addActionListener(new btAction());
         btDrawEllipse.addActionListener(new btAction());
         btDrawLine.addActionListener(new btAction());
-        btDrawCurve.addActionListener(new btAction());
         btErase.addActionListener(new btAction());
 
 
@@ -86,13 +107,13 @@ public class paintFrame extends JFrame {
         p.add(btDrawRect);
         p.add(btDrawEllipse);
         p.add(btDrawLine);
-        p.add(btDrawCurve);
         p.add(btSelColor);
         p.add(btSelThick);
 
 
         Panel p2 = new Panel();
         p2.setLayout(new GridLayout(1,3));
+        p2.setBackground(Color.yellow);
 
         Label answerLabel = new Label("색칠 리스트");
         answerLabel.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -105,7 +126,7 @@ public class paintFrame extends JFrame {
         selectGame.setFont(new Font("Serif", Font.PLAIN, 30));
 
         Button btAnswerSend = new Button("확인");
-        btAnswerSend.setPreferredSize(new Dimension(60,60));
+        btAnswerSend.setPreferredSize(new Dimension(20,20));
 
 
 
@@ -122,15 +143,9 @@ public class paintFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JColorChooser chooser = new JColorChooser(); // 색 선택
                 selColor = chooser.showDialog(null, "색상 변경", Color.ORANGE);
-                g.setColor(selColor);
+                g2D.setColor(selColor);
             }
         });
-
-    }
-
-
-    private void makeSketchFrame(){
-
 
     }
 
@@ -143,20 +158,47 @@ public class paintFrame extends JFrame {
               startX = e.getX();
               startY = e.getY();
           }
+          @Override
+          public void mouseReleased(MouseEvent e) {
+
+              switch (ToolStatus){
+                  case Rect:
+                      endX = e.getX();
+                      endY = e.getY();
+                      g2D.drawRect(startX, startY, endX, endY);
+                      break;
+                  case Ellipse:
+                      endX = e.getX();
+                      endY = e.getY();
+                      g2D.drawOval(startX, startY, endX, endY);
+                      break;
+                  case Line:
+                      endX = e.getX();
+                      endY = e.getY();
+                      g2D.drawLine(startX, startY, endX, endY);
+                      break;
+
+              }
+          }
       });
 
        addMouseMotionListener(new MouseMotionAdapter() {
            @Override
            public void mouseDragged(MouseEvent e) {
 
-               endX = e.getX();
-               endY = e.getY();
+               switch (ToolStatus){
+                   case Pen:
+                   case Erase:
+                       endX = e.getX();
+                       endY = e.getY();
 
-               g2D.setStroke(new BasicStroke(20, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
-               g2D.drawLine(startX,startY,endX,endY);
+                       g2D.setStroke(new BasicStroke(20, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
+                       g2D.drawLine(startX, startY, endX, endY);
 
-               startX = endX; // 연속적으로 그려지기 위해서, 움직였을 때 마지막 좌표를 시작좌표로 초기화
-               startY = endY;
+                       startX = endX; // 연속적으로 그려지기 위해서, 움직였을 때 마지막 좌표를 시작좌표로 초기화
+                       startY = endY;
+                       break;
+               }
 
 
            }
