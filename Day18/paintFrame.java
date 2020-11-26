@@ -9,7 +9,7 @@ public class paintFrame extends JFrame {
     private int startY = 0;
     private int endX = 0;
     private int endY = 0;
-    private Color selColor = Color.BLACK;
+    public static Color selColor = Color.BLACK;
     private int selThick = 5;
     Graphics g;
     public static Graphics2D g2D;
@@ -81,23 +81,25 @@ public class paintFrame extends JFrame {
     private void makeButton() {
 
 
-
-
         Panel p = new Panel();
         p.setLayout(new GridLayout(1,7));
         p.setBackground(Color.cyan);
 
 
-        Button btDrawPencil= new Button("연필");
-        Button btDrawRect= new Button("사각형");
-        Button btDrawEllipse = new Button("원");
-        Button btDrawLine = new Button("직선");
+        JButton btDrawPencil= new JButton("연필");
+        JButton btDrawRect= new JButton("사각형");
+        JButton btDrawEllipse = new JButton("원");
+        JButton btDrawLine = new JButton("직선");
 
-        Button btErase = new Button("지우개");
-        Button btSelColor = new Button("색상변경");
-        Button btSelThick= new Button("굵기변경");
+        JButton btErase = new JButton("지우개");
+        JButton btSelColor = new JButton("색상");
+        JButton btSelThick= new JButton ("두께");
 
+
+
+        btSelColor.setForeground(Color.white);
         btSelColor.setBackground(selColor);
+
 
         btDrawPencil.addActionListener(new btAction());
         btDrawRect.addActionListener(new btAction());
@@ -135,7 +137,7 @@ public class paintFrame extends JFrame {
         selectGame.add("엘사");
         selectGame.setFont(new Font("Serif", Font.PLAIN, 30));
 
-        Button btAnswerSend = new Button("확인");
+        JButton btAnswerSend = new JButton("확인");
         btAnswerSend.setPreferredSize(new Dimension(20,20));
 
 
@@ -196,6 +198,15 @@ public class paintFrame extends JFrame {
                 DlgSelectThick.dispose();    //메모리에서 제거한다.
             }
         });
+
+        btDrawPencil.setFont(new Font("Serif", Font.PLAIN, 30));
+        btDrawRect.setFont(new Font("Serif", Font.PLAIN, 30));
+        btDrawRect.setFont(new Font("Serif", Font.PLAIN, 30));
+        btDrawEllipse.setFont(new Font("Serif", Font.PLAIN, 30));
+        btDrawLine.setFont(new Font("Serif", Font.PLAIN, 30));
+        btErase.setFont(new Font("Serif", Font.PLAIN, 30));
+        btSelColor.setFont(new Font("Serif", Font.PLAIN, 30));
+        btSelThick.setFont(new Font("Serif", Font.PLAIN, 30));
 
     }
 
