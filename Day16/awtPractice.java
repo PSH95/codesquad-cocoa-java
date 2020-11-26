@@ -1,22 +1,18 @@
 package com.example.Day16;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class awtPractice extends Frame {
 
     static final Dimension res = Toolkit.getDefaultToolkit().getScreenSize(); // 해상도 불러오는 함수
-    private MenuBar menuBar;
-    private Menu menuFile; // 파일 메뉴
-    private Menu menuEdit; // 편집 메뉴
-    private Menu menuView; // 보기 메뉴
-    private Menu menuHelp; // 도움말 메뉴
-
-    private MenuItem menuFileNew; // 새로만들기
-    private MenuItem menuFileOpen; // 파일 열기
-
-
+    private BufferedImage background;
 
     public void initFrame(){
 
@@ -24,53 +20,65 @@ public class awtPractice extends Frame {
         setVisible(true);
         setLocation(res.width/2-this.getWidth()/2,res.height/2-this.getHeight()/2); // 절반의 해상도에서 프레임 크기의 절반을 빼줘야 정중앙으로 옮길 수 있다.
 
-        FlowLayout fl = new FlowLayout();
-        fl.setAlignment(FlowLayout.CENTER);
-        this.setLayout(fl);
 
-        Panel area = new Panel();
-        area.setBackground(Color.BLACK);
-        area.setLocation(50,520);
+        MenuBar mb = new MenuBar();
+        Menu mFile = new Menu("File");
+        MenuItem miNew = new MenuItem("New");
+        MenuItem miOpen = new MenuItem("Open");
+        Menu mOthers = new Menu("Others"); // MenuItem Menu 이 아니라 임에 주의
+        MenuItem miExit = new MenuItem("Exit");
 
-        Button b1 = new Button("테스트");
-        b1.setPreferredSize(new Dimension(160, 40)); // 버튼 크기 설정
-        Button b2 = new Button("테스트2");
-        b2.setPreferredSize(new Dimension(160, 40)); // 버튼 크기 설정
+        mFile.add(miNew); // Menu MenuItem . 에 들을 추가한다
+        mFile.add(miOpen);
+        mFile.add(mOthers); // Menu Menu . 에 를 추가한다
+        mFile.addSeparator(); // .
 
-        area.add(b1);
-        area.add(b2);
+        mFile.add(miExit);
+        MenuItem miPrint = new MenuItem("Print ...");
+        MenuItem miPreview = new MenuItem("Print Preview");
+        MenuItem miSetup = new MenuItem("Print Setup ...");
+        mOthers.add(miPrint);
+        mOthers.add(miPreview);
+        mOthers.add(miSetup);
+        Menu mEdit = new Menu("Edit");
+        Menu mView = new Menu("View");
+        Menu mHelp = new Menu("Help");
+        CheckboxMenuItem miStatusbar = new CheckboxMenuItem("Statusbar");
+        mView.add(miStatusbar);
+        mb.add(mFile); // MenuBar Menu . 에 를 추가한다
+        mb.add(mEdit);
+        mb.add(mView);
+        mb.setHelpMenu(mHelp); // mHelp HelpMenu .
 
-        this.add(area,"North");
+        setMenuBar(mb); // Frame MenuBar . 에 를 포함시킨다
 
-        this.menuBar = new MenuBar();
-        this.setMenuBar(this.menuBar);
+    }
 
-        this.menuFile = new Menu ("파일(F)");
-        this.menuBar.add(this.menuFile);
-
-        this.menuEdit = new Menu ("편집(E)");
-        this.menuBar.add(this.menuEdit);
-
-        this.menuView = new Menu ("보기(V)");
-        this.menuBar.add(this.menuView);
-
-        this.menuHelp = new Menu ("도움말(H)");
-        this.menuBar.add(this.menuHelp);
-
-        this.menuFileNew = new MenuItem("새로 만들기(N)");
-        this.menuFile.add(this.menuFileNew);
-
-        this.menuFileOpen = new MenuItem("파일 열기(O)");
-        this.menuFile.add(this.menuFileOpen);
-
-        this.setVisible(true);
+    @Override
+    public void paint(Graphics g) {
+        g = this.getGraphics();
+        g.drawImage(background, 0, 0, this);
     }
 
     public awtPractice(){
         initFrame();
+
+        try {
+            File f = new File("./");
+            System.out.println(f.getAbsolutePath());
+            background = ImageIO.read(new File("./resources/bg.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "BG loading error: " + e.getMessage(),
+                    "Loading Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
+        }
     }
 
     public static void main(String[] args) {
+
+
 
         EventQueue.invokeLater(new Runnable() {
             @Override
