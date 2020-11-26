@@ -2,16 +2,16 @@ package com.example.Day18;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 
 public class paintFrame extends JFrame {
     private int startX = 0;
     private int startY = 0;
-    private Color lineColor;
+    private int endX = 0;
+    private int endY = 0;
+    private Color selColor;
     Graphics g;
+    public static Graphics2D g2D;
 
     static final Dimension res = Toolkit.getDefaultToolkit().getScreenSize(); // 해상도 불러오는 함수
 
@@ -19,6 +19,7 @@ public class paintFrame extends JFrame {
         setTitle("색칠공부");
         setSize(res.width/2,900);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setBackground(Color.white);
         setResizable(false);
         setVisible(true);
         setLocationRelativeTo(null); //m 정중앙으로 옮겨주는 메소드
@@ -31,16 +32,10 @@ public class paintFrame extends JFrame {
         addEvent();
 
         g = getGraphics();
+        g2D = (Graphics2D)g;
 
     }
 
-    @Override
-    public void paint(Graphics g) {
-        g.setColor(lineColor);
-        g.drawString("●", startX, startY);
-
-
-    }
 
     private void makeMenu() {
 
@@ -74,6 +69,14 @@ public class paintFrame extends JFrame {
         Button btErase = new Button("지우개");
         Button btSelColor = new Button("색상변경");
         Button btSelThick= new Button("굵기변경");
+
+        btDrawPencil.addActionListener(new btAction());
+        btDrawRect.addActionListener(new btAction());
+        btDrawEllipse.addActionListener(new btAction());
+        btDrawLine.addActionListener(new btAction());
+        btDrawCurve.addActionListener(new btAction());
+        btErase.addActionListener(new btAction());
+
 
         btDrawRect.setPreferredSize(new Dimension(100,100));
 
@@ -118,8 +121,8 @@ public class paintFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JColorChooser chooser = new JColorChooser(); // 색 선택
-                lineColor = chooser.showDialog(null, "색상 변경", Color.ORANGE);
-                g.setColor(lineColor);
+                selColor = chooser.showDialog(null, "색상 변경", Color.ORANGE);
+                g.setColor(selColor);
             }
         });
 
@@ -133,12 +136,29 @@ public class paintFrame extends JFrame {
 
     private void addEvent() {
 
+      addMouseListener(new MouseAdapter() {
+          @Override
+          public void mousePressed(MouseEvent e) {
+              super.mousePressed(e);
+              startX = e.getX();
+              startY = e.getY();
+          }
+      });
+
        addMouseMotionListener(new MouseMotionAdapter() {
            @Override
            public void mouseDragged(MouseEvent e) {
-               startX = e.getX();
-               startY = e.getY();
-               repaint();
+
+               endX = e.getX();
+               endY = e.getY();
+
+               g2D.setStroke(new BasicStroke(20, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
+               g2D.drawLine(startX,startY,endX,endY);
+
+               startX = endX; // 연속적으로 그려지기 위해서, 움직였을 때 마지막 좌표를 시작좌표로 초기화
+               startY = endY;
+
+
            }
        });
 
