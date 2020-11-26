@@ -2,17 +2,21 @@ package com.example.Day18;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
 public class paintFrame extends JFrame {
-    int x = 0;
-    int y = 0;
+    private int startX = 0;
+    private int startY = 0;
+    private Color lineColor;
+    Graphics g;
 
     static final Dimension res = Toolkit.getDefaultToolkit().getScreenSize(); // 해상도 불러오는 함수
 
     public void init(){
-        setTitle("그림판");
+        setTitle("색칠공부");
         setSize(res.width/2,900);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -26,11 +30,15 @@ public class paintFrame extends JFrame {
 
         addEvent();
 
+        g = getGraphics();
+
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawString("●", x, y);
+        g.setColor(lineColor);
+        g.drawString("●", startX, startY);
+
 
     }
 
@@ -53,7 +61,8 @@ public class paintFrame extends JFrame {
     private void makeButton() {
 
         Panel p = new Panel();
-        p.setLayout(new GridLayout(1,7));
+        p.setLayout(new GridLayout(1,8));
+        p.setBackground(Color.cyan);
 
 
         Button btDrawPencil= new Button("연필");
@@ -64,26 +73,33 @@ public class paintFrame extends JFrame {
 
         Button btErase = new Button("지우개");
         Button btSelColor = new Button("색상변경");
+        Button btSelThick= new Button("굵기변경");
 
-        btDrawRect.setPreferredSize(new Dimension(70,70));
+        btDrawRect.setPreferredSize(new Dimension(100,100));
 
         p.add(btDrawPencil);
+        p.add(btErase);
+
         p.add(btDrawRect);
         p.add(btDrawEllipse);
         p.add(btDrawLine);
         p.add(btDrawCurve);
-        p.add(btErase);
         p.add(btSelColor);
+        p.add(btSelThick);
 
 
         Panel p2 = new Panel();
         p2.setLayout(new GridLayout(1,3));
 
-        Label answerLabel = new Label("정답");
+        Label answerLabel = new Label("색칠 리스트");
         answerLabel.setFont(new Font("Serif", Font.PLAIN, 30));
         answerLabel.setAlignment(Label.CENTER);
-        TextField answerFiled = new TextField();
-        answerFiled.setFont(new Font("Serif", Font.PLAIN, 50));
+
+        Choice selectGame = new Choice();
+        selectGame.add("뽀로로");
+        selectGame.add("펭하");
+        selectGame.add("엘사");
+        selectGame.setFont(new Font("Serif", Font.PLAIN, 30));
 
         Button btAnswerSend = new Button("확인");
         btAnswerSend.setPreferredSize(new Dimension(60,60));
@@ -91,13 +107,21 @@ public class paintFrame extends JFrame {
 
 
         p2.add(answerLabel);
-        p2.add(answerFiled);
+        p2.add(selectGame);
         p2.add(btAnswerSend);
 
 
         add(p,"North");
         add(p2,"South");
 
+        btSelColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JColorChooser chooser = new JColorChooser(); // 색 선택
+                lineColor = chooser.showDialog(null, "색상 변경", Color.ORANGE);
+                g.setColor(lineColor);
+            }
+        });
 
     }
 
@@ -112,8 +136,8 @@ public class paintFrame extends JFrame {
        addMouseMotionListener(new MouseMotionAdapter() {
            @Override
            public void mouseDragged(MouseEvent e) {
-               x = e.getX();
-               y = e.getY();
+               startX = e.getX();
+               startY = e.getY();
                repaint();
            }
        });
