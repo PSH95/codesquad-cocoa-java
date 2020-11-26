@@ -1,10 +1,16 @@
 package com.example.Day18;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class paintFrame extends JFrame {
+
+    private BufferedImage background;
     private int startX = 0;
     private int startY = 0;
     private int endX = 0;
@@ -24,8 +30,15 @@ public class paintFrame extends JFrame {
 
 
     static final Dimension res = Toolkit.getDefaultToolkit().getScreenSize(); // 해상도 불러오는 함수
+    @Override
 
+    public void paint(Graphics g) {
+        g.drawImage(background, 0, 0, this);
+
+    }
     public void init(){
+
+
         setTitle("색칠공부");
         setSize(res.width/2,900);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -92,7 +105,7 @@ public class paintFrame extends JFrame {
         JButton btDrawLine = new JButton("직선");
 
         JButton btErase = new JButton("지우개");
-        JButton btSelColor = new JButton("색상");
+        JButton btSelColor = new JButton();
         JButton btSelThick= new JButton ("두께");
 
 
@@ -132,19 +145,34 @@ public class paintFrame extends JFrame {
         answerLabel.setAlignment(Label.CENTER);
 
         Choice selectGame = new Choice();
-        selectGame.add("뽀로로");
-        selectGame.add("펭하");
-        selectGame.add("엘사");
+        selectGame.add("0");
+        selectGame.add("1");
+        selectGame.add("2");
+        selectGame.add("3");
+        selectGame.add("4");
+        selectGame.add("5");
         selectGame.setFont(new Font("Serif", Font.PLAIN, 30));
 
-        JButton btAnswerSend = new JButton("확인");
-        btAnswerSend.setPreferredSize(new Dimension(20,20));
+        JButton btSelectImage = new JButton("확인");
+        btSelectImage.setPreferredSize(new Dimension(20,20));
 
+        btSelectImage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    background = ImageIO.read(new File("./resource/bg" + selectGame.getSelectedItem() + ".jpg"));
+
+                    repaint();
+                } catch (IOException d) {
+                    d.printStackTrace();
+                }
+            }
+        });
 
 
         p2.add(answerLabel);
         p2.add(selectGame);
-        p2.add(btAnswerSend);
+        p2.add(btSelectImage);
 
 
         add(p,"North");
