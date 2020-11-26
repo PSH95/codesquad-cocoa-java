@@ -100,16 +100,14 @@ public class paintFrame extends JFrame {
         p.setBackground(Color.cyan);
 
 
-        JButton btDrawPencil= new JButton();
-        JButton btDrawRect= new JButton();
-        JButton btDrawEllipse = new JButton();
-        JButton btDrawLine = new JButton();
+        JButton btDrawPencil= new JButton("연필");
+        JButton btDrawRect= new JButton("사각형");
+        JButton btDrawEllipse = new JButton("원");
+        JButton btDrawLine = new JButton("직선");
 
-        JButton btErase = new JButton();
+        JButton btErase = new JButton("지우개");
         JButton btSelColor = new JButton();
         JButton btSelThick= new JButton ();
-
-
 
         btSelColor.setForeground(Color.white);
         btSelColor.setBackground(selColor);
@@ -120,6 +118,7 @@ public class paintFrame extends JFrame {
         btDrawEllipse.addActionListener(new btAction());
         btDrawLine.addActionListener(new btAction());
         btErase.addActionListener(new btAction());
+
 
         btDrawRect.setPreferredSize(new Dimension(100,100));
 
@@ -245,12 +244,6 @@ public class paintFrame extends JFrame {
         btSelColor.setIcon(iconColor);
         btSelThick.setIcon(iconThick);
 
-        btDrawPencil.setFont(new Font("Serif", Font.PLAIN, 30));
-        btDrawRect.setFont(new Font("Serif", Font.PLAIN, 30));
-        btDrawRect.setFont(new Font("Serif", Font.PLAIN, 30));
-        btDrawEllipse.setFont(new Font("Serif", Font.PLAIN, 30));
-        btDrawLine.setFont(new Font("Serif", Font.PLAIN, 30));
-        btErase.setFont(new Font("Serif", Font.PLAIN, 30));
         btSelColor.setFont(new Font("Serif", Font.PLAIN, 30));
         btSelThick.setFont(new Font("Serif", Font.PLAIN, 30));
 
