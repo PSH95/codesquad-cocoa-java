@@ -10,6 +10,7 @@ public class paintFrame extends JFrame {
     private int endX = 0;
     private int endY = 0;
     private Color selColor;
+    private int selThick = 5;
     Graphics g;
     public static Graphics2D g2D;
 
@@ -41,7 +42,7 @@ public class paintFrame extends JFrame {
 
         g = getGraphics();
         g2D = (Graphics2D)g;
-
+        g2D.setStroke(new BasicStroke(selThick, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
     }
 
 
@@ -98,7 +99,6 @@ public class paintFrame extends JFrame {
         btDrawLine.addActionListener(new btAction());
         btErase.addActionListener(new btAction());
 
-
         btDrawRect.setPreferredSize(new Dimension(100,100));
 
         p.add(btDrawPencil);
@@ -147,6 +147,45 @@ public class paintFrame extends JFrame {
             }
         });
 
+        Dialog DlgSelectThick = new Dialog(this, "Information", true);
+
+        Label DlgMsg = new Label("두께를 클릭하세요.", Label.CENTER);
+        DlgMsg.setBackground(Color.white);
+        DlgMsg.setFont(new Font("Serif", Font.PLAIN, 30));
+        Choice DlgListThick = new Choice();
+        DlgListThick.add("5");
+        DlgListThick.add("20");
+        DlgListThick.add("60");
+        DlgListThick.add("150");
+        DlgListThick.setFont(new Font("Serif", Font.PLAIN, 30));
+        Button DlgOK = new Button("확인");
+
+
+        DlgSelectThick.setSize(500,200);
+        DlgSelectThick.setBackground(Color.BLACK);
+        DlgSelectThick.setLayout(new BorderLayout());
+        DlgSelectThick.setLocationRelativeTo(null);
+        DlgSelectThick.add(DlgMsg,"North");
+        DlgSelectThick.add(DlgListThick,"Center");
+        DlgSelectThick.add(DlgOK,"South");
+
+        btSelThick.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DlgSelectThick.setVisible(true);
+                g2D.setStroke(new BasicStroke(selThick, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
+            }
+        });
+
+        DlgOK.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selThick = Integer.parseInt(DlgListThick.getSelectedItem());
+                DlgSelectThick.setVisible(false);  //Frame을 화면에서 보이지 않도록 하고
+                DlgSelectThick.dispose();    //메모리에서 제거한다.
+            }
+        });
+
     }
 
     private void addEvent() {
@@ -189,10 +228,10 @@ public class paintFrame extends JFrame {
                switch (ToolStatus){
                    case Pen:
                    case Erase:
+
                        endX = e.getX();
                        endY = e.getY();
 
-                       g2D.setStroke(new BasicStroke(20, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
                        g2D.drawLine(startX, startY, endX, endY);
 
                        startX = endX; // 연속적으로 그려지기 위해서, 움직였을 때 마지막 좌표를 시작좌표로 초기화
