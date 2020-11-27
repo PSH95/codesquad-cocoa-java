@@ -11,7 +11,7 @@
 
 ### 결과물
 
-> ![Result](https://i.imgur.com/ZAScCqz.gif)
+> ![Result](https://i.imgur.com/3ktwi2S.gif)
 
 
 ### 구현 한 것.
