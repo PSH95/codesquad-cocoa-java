@@ -15,13 +15,14 @@ public class paintFrame extends JFrame {
     public static Color selColor = Color.BLACK;
 
     private Graphics g;
-    private BufferedImage background;
+    private BufferedImage background = ImageIO.read(new File("./resource/bg0.jpg"));
     private int startX = 0;
     private int startY = 0;
     private int endX = 0;
     private int endY = 0;
 
     private int selThick = 5;
+    private Choice selectGame;
 
     private final int Pen = 1; //m ToolStatus 를 구분하기 위한 상수들
     private final int Erase = 2;
@@ -41,7 +42,7 @@ public class paintFrame extends JFrame {
     private FileDialog dlgOpen = new FileDialog(this,"열기",FileDialog.LOAD);
 
 
-    public paintFrame(){
+    public paintFrame() throws IOException {
         initFrame();
         addMouseEvent();
         makeMenu();
@@ -51,6 +52,7 @@ public class paintFrame extends JFrame {
     @Override
     public void paint(Graphics g) {
         g2D.drawImage(background, 0, 0, this);
+
     }
     public void initFrame(){
 
@@ -66,7 +68,6 @@ public class paintFrame extends JFrame {
         g = getGraphics();
         g2D = (Graphics2D)g;
         g2D.setStroke(new BasicStroke(selThick, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
-
     }
 
 
@@ -115,6 +116,11 @@ public class paintFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                try {
+                    background = ImageIO.read(new File("./resource/bg" + selectGame.getSelectedItem() + ".jpg"));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
                 repaint();
 
             }
@@ -160,11 +166,11 @@ public class paintFrame extends JFrame {
         p2.setLayout(new GridLayout(1,3));
         p2.setBackground(Color.yellow);
 
-        Label answerLabel = new Label("도안 리스트");
+        Label answerLabel = new Label("색칠 리스트");
         answerLabel.setFont(new Font("Serif", Font.BOLD, 30));
         answerLabel.setAlignment(Label.CENTER);
 
-        Choice selectGame = new Choice();
+        selectGame = new Choice();
         selectGame.add("0");
         selectGame.add("1");
         selectGame.add("2");
@@ -255,7 +261,6 @@ public class paintFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     background = ImageIO.read(new File("./resource/bg" + selectGame.getSelectedItem() + ".jpg"));
-
                     repaint();
                 } catch (IOException d) {
                     d.printStackTrace();
@@ -296,16 +301,16 @@ public class paintFrame extends JFrame {
 
               switch (ToolStatus){
                   case Rect:
+                      endX = e.getX()-startX;
+                      endY = e.getY()-startY;
                       g2D.drawRect(startX, startY, endX, endY);
                       break;
                   case Ellipse:
-                      endX = e.getX();
-                      endY = e.getY();
+                      endX = e.getX()-startX;
+                      endY = e.getY()-startY;
                       g2D.drawOval(startX, startY, endX, endY);
                       break;
                   case Line:
-                      endX = e.getX();
-                      endY = e.getY();
                       g2D.drawLine(startX, startY, endX, endY);
                       break;
 
@@ -320,7 +325,6 @@ public class paintFrame extends JFrame {
                switch (ToolStatus){
                    case Pen:
                    case Erase:
-
                        endX = e.getX();
                        endY = e.getY();
 
@@ -329,10 +333,22 @@ public class paintFrame extends JFrame {
                        startX = endX; // 연속적으로 그려지기 위해서, 움직였을 때 마지막 좌표를 시작좌표로 초기화
                        startY = endY;
                        break;
-                   case Rect:
+                   case Line:
                        endX = e.getX();
                        endY = e.getY();
-
+                       break;
+                   case Ellipse:
+                       repaint(startX, startY, endX, endY);
+                       endX = e.getX()-startX;
+                       endY = e.getY()-startY;
+                       g2D.drawOval(startX, startY, endX, endY);
+                       break;
+                   case Rect:
+                       repaint(startX, startY, endX, endY);
+                       endX = e.getX()-startX;
+                       endY = e.getY()-startY;
+                       g2D.drawRect(startX, startY, endX, endY);
+                       break;
                }
 
 
