@@ -42,8 +42,8 @@ public class paintFrame extends JFrame {
 
 
     public paintFrame(){
-        init();
-        addEvent();
+        initFrame();
+        addMouseEvent();
         makeMenu();
         makeButton();
     }
@@ -52,7 +52,7 @@ public class paintFrame extends JFrame {
     public void paint(Graphics g) {
         g2D.drawImage(background, 0, 0, this);
     }
-    public void init(){
+    public void initFrame(){
 
         setTitle("색칠공부");
         setSize(1000,900);
@@ -82,23 +82,6 @@ public class paintFrame extends JFrame {
         mFile.add(mSave);
         mFile.add(mLoad);
 
-        mSave.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dlgSave.setVisible(true);
-                String data = dlgSave.getDirectory()+ dlgSave.getFile();;  // 파일의 디렉토리 정보와 파일명을 얻는다.
-
-                try{
-
-                    ImageIO.write(background, "PNG", new File(data));
-                    String Filename = dlgSave.getFile();  // 저장할 파일의 이름을 넣고..
-                    setTitle(Filename);  // 프레임 명을 파일명으로 바꾼다..
-                }catch(Exception e1){
-
-                }
-            }
-        });
-
         Menu mEdit = new Menu("편집(E)");
         MenuItem mAllDelete = new MenuItem("모두지우기");
         mEdit.add(mAllDelete);
@@ -107,6 +90,26 @@ public class paintFrame extends JFrame {
         menuBar.add(mEdit);
 
         setMenuBar(menuBar);
+
+
+        /***
+         *  저장버튼, 삭제버튼의 액션 리스너
+         */
+        mSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dlgSave.setVisible(true);
+                String data = dlgSave.getDirectory()+ dlgSave.getFile();;  // 파일의 디렉토리 정보와 파일명을 얻는다.
+
+                try{
+                    ImageIO.write(background, "PNG", new File(data));
+                    String Filename = dlgSave.getFile();  // 저장할 파일의 이름을 넣고..
+                    setTitle(Filename);  // 프레임 명을 파일명으로 바꾼다..
+                }catch(Exception e1){
+
+                }
+            }
+        });
 
         mAllDelete.addActionListener(new ActionListener() {
             @Override
@@ -279,7 +282,7 @@ public class paintFrame extends JFrame {
 
     }
 
-    private void addEvent() {
+    private void addMouseEvent() {
 
       addMouseListener(new MouseAdapter() {
           @Override
