@@ -6,6 +6,11 @@ import java.awt.event.ActionListener;
 
 public class btAction implements ActionListener {
 
+    private final int Pen = 1;
+    private final int Erase = 2;
+    private final int Rect = 3;
+    private final int Ellipse = 4;
+    private final int Line = 5;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -15,20 +20,20 @@ public class btAction implements ActionListener {
         switch (e.getActionCommand()){
 
             case "연필":
-                paintFrame.ToolStatus = 1;
+                paintFrame.ToolStatus = Pen;
                 break;
             case "지우개":
-                paintFrame.ToolStatus = 2;
+                paintFrame.ToolStatus = Erase;
                 paintFrame.g2D.setColor(Color.white);
                 break;
             case "사각형":
-                paintFrame.ToolStatus = 3;
+                paintFrame.ToolStatus = Rect;
                 break;
             case "원":
-                paintFrame.ToolStatus = 4;
+                paintFrame.ToolStatus = Ellipse;
                 break;
             case "직선":
-                paintFrame.ToolStatus = 5;
+                paintFrame.ToolStatus = Line;
                 break;
             default:
                 break;

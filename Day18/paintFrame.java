@@ -10,37 +10,52 @@ import java.io.IOException;
 
 public class paintFrame extends JFrame {
 
+    public static Graphics2D g2D;
+    public static int ToolStatus = 1; //m 도구(연필,사각형 등 선택하는 것)
+    public static Color selColor = Color.BLACK;
+
+    private Graphics g;
     private BufferedImage background;
     private int startX = 0;
     private int startY = 0;
     private int endX = 0;
     private int endY = 0;
-    public static Color selColor = Color.BLACK;
-    private int selThick = 5;
-    Graphics g;
-    public static Graphics2D g2D;
 
-    public static int ToolStatus = 1;
-    private final int Pen = 1;
+    private int selThick = 5;
+
+    private final int Pen = 1; //m ToolStatus 를 구분하기 위한 상수들
     private final int Erase = 2;
     private final int Rect = 3;
     private final int Ellipse = 4;
     private final int Line = 5;
 
+    private final ImageIcon iconPen = new ImageIcon("./resource/icon/pencil.png");
+    private final ImageIcon iconErase = new ImageIcon("./resource/icon/eraser.png");
+    private final ImageIcon iconRect = new ImageIcon("./resource/icon/rectangle.png");
+    private final ImageIcon iconCircle = new ImageIcon("./resource/icon/circle.png");
+    private final ImageIcon iconLine= new ImageIcon("./resource/icon/line.png");
+    private final ImageIcon iconColor= new ImageIcon("./resource/icon/painting.png");
+    private final ImageIcon iconThick= new ImageIcon("./resource/icon/width.png");
+
+    private FileDialog dlgSave = new FileDialog(this,"저장",FileDialog.SAVE);
+    private FileDialog dlgOpen = new FileDialog(this,"열기",FileDialog.LOAD);
 
 
-    static final Dimension res = Toolkit.getDefaultToolkit().getScreenSize(); // 해상도 불러오는 함수
+    public paintFrame(){
+        init();
+        addEvent();
+        makeMenu();
+        makeButton();
+    }
+
     @Override
-
     public void paint(Graphics g) {
-        g.drawImage(background, 0, 0, this);
-
+        g2D.drawImage(background, 0, 0, this);
     }
     public void init(){
 
-
         setTitle("색칠공부");
-        setSize(res.width/2,900);
+        setSize(1000,900);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground( Color.white );   //m getContentPane()을 하니까 색변경이 됬다.. 왜지??? 찾아보기...
         setResizable(false);
@@ -48,15 +63,10 @@ public class paintFrame extends JFrame {
         setLocationRelativeTo(null); //m 정중앙으로 옮겨주는 메소드
         setLayout(new BorderLayout());
 
-
-        makeMenu();
-        makeButton();
-
-        addEvent();
-
         g = getGraphics();
         g2D = (Graphics2D)g;
         g2D.setStroke(new BasicStroke(selThick, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
+
     }
 
 
@@ -72,6 +82,22 @@ public class paintFrame extends JFrame {
         mFile.add(mSave);
         mFile.add(mLoad);
 
+        mSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dlgSave.setVisible(true);
+                String data = dlgSave.getDirectory()+ dlgSave.getFile();;  // 파일의 디렉토리 정보와 파일명을 얻는다.
+
+                try{
+
+                    ImageIO.write(background, "PNG", new File(data));
+                    String Filename = dlgSave.getFile();  // 저장할 파일의 이름을 넣고..
+                    setTitle(Filename);  // 프레임 명을 파일명으로 바꾼다..
+                }catch(Exception e1){
+
+                }
+            }
+        });
 
         Menu mEdit = new Menu("편집(E)");
         MenuItem mAllDelete = new MenuItem("모두지우기");
@@ -94,7 +120,9 @@ public class paintFrame extends JFrame {
     }
     private void makeButton() {
 
-
+        /***
+         *m  North 컴포넌트(연필,사각형,색변경 등..)
+         */
         Panel p = new Panel();
         p.setLayout(new GridLayout(1,7));
         p.setBackground(Color.cyan);
@@ -109,19 +137,8 @@ public class paintFrame extends JFrame {
         JButton btSelColor = new JButton();
         JButton btSelThick= new JButton ();
 
-        btSelColor.setForeground(Color.white);
-        btSelColor.setBackground(selColor);
-
-
-        btDrawPencil.addActionListener(new btAction());
-        btDrawRect.addActionListener(new btAction());
-        btDrawEllipse.addActionListener(new btAction());
-        btDrawLine.addActionListener(new btAction());
-        btErase.addActionListener(new btAction());
-
 
         btDrawRect.setPreferredSize(new Dimension(100,100));
-
 
         p.add(btDrawPencil);
         p.add(btErase);
@@ -132,9 +149,9 @@ public class paintFrame extends JFrame {
         p.add(btSelColor);
         p.add(btSelThick);
 
-       // p.add(colorStatus);
-
-
+        /***
+         *m  South 컴포넌트(도면 리스트..)
+         */
 
         Panel p2 = new Panel();
         p2.setLayout(new GridLayout(1,3));
@@ -157,19 +174,6 @@ public class paintFrame extends JFrame {
         btSelectImage.setFont(new Font("Serif", Font.PLAIN, 30));
         btSelectImage.setPreferredSize(new Dimension(20,20));
 
-        btSelectImage.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    background = ImageIO.read(new File("./resource/bg" + selectGame.getSelectedItem() + ".jpg"));
-
-                    repaint();
-                } catch (IOException d) {
-                    d.printStackTrace();
-                }
-            }
-        });
-
 
         p2.add(answerLabel);
         p2.add(selectGame);
@@ -179,19 +183,10 @@ public class paintFrame extends JFrame {
         add(p,"North");
         add(p2,"South");
 
-        btSelColor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JColorChooser chooser = new JColorChooser(); // 색 선택
-                selColor = chooser.showDialog(null, "색상 변경", Color.ORANGE);
-                g2D.setColor(selColor);
-                btSelColor.setBackground(selColor);
-            }
-        });
 
-        Dialog DlgSelectThick = new Dialog(this, "Information", true);
+        Dialog DlgSelectThick = new Dialog(this, "두께변경", true);
 
-        Label DlgMsg = new Label("두께를 클릭하세요.", Label.CENTER);
+        Label DlgMsg = new Label("변경할 두께를 클릭하세요.", Label.CENTER);
         DlgMsg.setBackground(Color.white);
         DlgMsg.setFont(new Font("Serif", Font.PLAIN, 30));
         Choice DlgListThick = new Choice();
@@ -211,30 +206,10 @@ public class paintFrame extends JFrame {
         DlgSelectThick.add(DlgListThick,"Center");
         DlgSelectThick.add(DlgOK,"South");
 
-        btSelThick.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DlgSelectThick.setVisible(true);
-                g2D.setStroke(new BasicStroke(selThick, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
-            }
-        });
 
-        DlgOK.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selThick = Integer.parseInt(DlgListThick.getSelectedItem());
-                DlgSelectThick.setVisible(false);  //Frame을 화면에서 보이지 않도록 하고
-                DlgSelectThick.dispose();    //메모리에서 제거한다.
-            }
-        });
-
-        ImageIcon iconPen = new ImageIcon("./resource/icon/pencil.png");
-        ImageIcon iconErase = new ImageIcon("./resource/icon/eraser.png");
-        ImageIcon iconRect = new ImageIcon("./resource/icon/rectangle.png");
-        ImageIcon iconCircle = new ImageIcon("./resource/icon/circle.png");
-        ImageIcon iconLine= new ImageIcon("./resource/icon/line.png");
-        ImageIcon iconColor= new ImageIcon("./resource/icon/painting.png");
-        ImageIcon iconThick= new ImageIcon("./resource/icon/width.png");
+        /**
+         *m 툴 버튼 아이콘,폰트 추가
+         */
 
         btDrawPencil.setIcon(iconPen);
         btErase.setIcon(iconErase);
@@ -252,6 +227,56 @@ public class paintFrame extends JFrame {
         btErase.setFont(new Font("Serif", Font.BOLD, 20));
 
 
+        /***
+         *m  버튼 컴포넌트의 리스너들
+         */
+
+        btDrawPencil.addActionListener(new btAction());
+        btDrawRect.addActionListener(new btAction());
+        btDrawEllipse.addActionListener(new btAction());
+        btDrawLine.addActionListener(new btAction());
+        btErase.addActionListener(new btAction());
+
+        btSelColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JColorChooser chooser = new JColorChooser(); // 색 선택
+                selColor = chooser.showDialog(null, "색상 변경", Color.ORANGE);
+                g2D.setColor(selColor);
+                btSelColor.setBackground(selColor);
+            }
+        });
+
+        btSelectImage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    background = ImageIO.read(new File("./resource/bg" + selectGame.getSelectedItem() + ".jpg"));
+
+                    repaint();
+                } catch (IOException d) {
+                    d.printStackTrace();
+                }
+            }
+        });
+
+        btSelThick.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DlgSelectThick.setVisible(true);
+                g2D.setStroke(new BasicStroke(selThick, BasicStroke.CAP_ROUND, 0)); //m 도형의 외각선 모양을 결정하는 속성, Graphic2D에서 지원함.
+            }
+        });
+
+        DlgOK.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selThick = Integer.parseInt(DlgListThick.getSelectedItem());
+                DlgSelectThick.setVisible(false);  //Frame을 화면에서 보이지 않도록 하고
+                DlgSelectThick.dispose();    //메모리에서 제거한다.
+            }
+        });
+
     }
 
     private void addEvent() {
@@ -268,8 +293,6 @@ public class paintFrame extends JFrame {
 
               switch (ToolStatus){
                   case Rect:
-                      endX = e.getX();
-                      endY = e.getY();
                       g2D.drawRect(startX, startY, endX, endY);
                       break;
                   case Ellipse:
@@ -303,18 +326,18 @@ public class paintFrame extends JFrame {
                        startX = endX; // 연속적으로 그려지기 위해서, 움직였을 때 마지막 좌표를 시작좌표로 초기화
                        startY = endY;
                        break;
+                   case Rect:
+                       endX = e.getX();
+                       endY = e.getY();
+
                }
 
 
            }
+
        });
 
-    }
 
-
-    public paintFrame(){
-        init();
-        addEvent();
 
     }
 
