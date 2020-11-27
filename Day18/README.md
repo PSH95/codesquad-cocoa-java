@@ -11,7 +11,7 @@
 
 ### 결과물
 
-> ![](https://images.velog.io/images/san/post/8302075b-755c-4acf-8e3e-9136fa353b85/paintProject.gif)
+> ![Result](https://images.velog.io/images/san/post/8302075b-755c-4acf-8e3e-9136fa353b85/paintProject.gif)
 
 
 ### 구현 한 것.
