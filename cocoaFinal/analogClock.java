@@ -9,11 +9,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class analogClock extends JFrame implements Runnable{
-    private ClockPanel ClockPanel = new ClockPanel();
-    private AlarmListPanel AlarmListPanel = new AlarmListPanel();
+
     private int i = 0;
-    private final int ScreenWidth = 1000;
-    private final int ScreenHeight = 1000;
+    private final int ScreenWidth = 500;
+    private final int ScreenHeight = 900;
     private final Image clockBackground = ImageIO.read(new File("./resource/ClockBackground.png"));
 
     private GregorianCalendar time;
@@ -22,6 +21,10 @@ public class analogClock extends JFrame implements Runnable{
     private int sec = 0;
 
     analogClock() throws IOException {
+        MenuBar menu = new MenuBar();
+        this.setMenuBar(menu);
+        Menu AddAlarmMenu = new Menu();
+        menu.add(AddAlarmMenu);
         ClockInit();
     }
 
@@ -33,29 +36,31 @@ public class analogClock extends JFrame implements Runnable{
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         JPanel remainTimePanel = new JPanel();
         remainTimePanel.setLayout(new BorderLayout());
-        remainTimePanel.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight/10));
-        remainTimePanel.setBackground(Color.WHITE);
+        remainTimePanel.setBackground(new Color(234,234,234));
+
 
         JLabel nextAlarmLabel1 = new JLabel("다음 알람");
         nextAlarmLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-        nextAlarmLabel1.setVerticalAlignment(SwingConstants.CENTER);
-        nextAlarmLabel1.setFont(new Font("나눔스퀘어", Font.BOLD, 30));
+        nextAlarmLabel1.setFont(new Font("나눔스퀘어", Font.PLAIN, 17));
         JLabel nextAlarmTimeLabel = new JLabel("16시간 30분 남음");
         remainTimePanel.add(nextAlarmLabel1,"North");
         remainTimePanel.add(nextAlarmTimeLabel,"South");
         nextAlarmTimeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        nextAlarmTimeLabel.setVerticalAlignment(SwingConstants.CENTER);
-        nextAlarmTimeLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 50));
+        nextAlarmTimeLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 35));
 
+
+        ClockPanel ClockPanel = new ClockPanel();
+        AlarmListPanel AlarmListPanel = new AlarmListPanel();
+
+        remainTimePanel.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight/15));
+        AlarmListPanel.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight/10*5));
+        //m center panel 사이즈는 north/south 사이즈 조정후 자동으로 지정됨.
 
         this.add(remainTimePanel,"North");
-        this.add(ClockPanel,"Center");
-
-        AlarmListPanel.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight/10*5));
         this.add(AlarmListPanel,"South");
+        this.add(ClockPanel,"Center");
 
 
 
@@ -63,6 +68,28 @@ public class analogClock extends JFrame implements Runnable{
     }
 
     class AlarmListPanel extends JPanel{
+
+        AlarmListPanel(){
+
+            ScrollPane sp = new ScrollPane();
+
+            Panel p = new Panel();
+            sp.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight/10*5)); //m AlarmListPanel 사이즈와 동일
+            p.setLayout(new GridLayout(1000,1,0,5));
+
+            JButton bt1 = new JButton("알람리스트1");
+            bt1.setPreferredSize(new Dimension(100,100));
+            p.add(bt1);
+
+            for(int i =2;i<100;i++) {
+                p.add(new JButton("알람리스트" + i));
+            }
+            sp.add(p);
+
+            this.add(sp);
+
+        }
+
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -79,8 +106,10 @@ public class analogClock extends JFrame implements Runnable{
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            this.setLayout(new BorderLayout());
+
             g.clearRect(0,0,this.getWidth(),this.getHeight());
-            g.setColor(Color.pink);
+            g.setColor(new Color(189,189,189));
             g.fillRect(0,0,this.getWidth(),this.getHeight());
 
             int Clock_X = this.getWidth()/2-clockBackground.getWidth(null)/2;  //m 시계 배경 ClockPanel 중앙 X좌표
@@ -100,10 +129,6 @@ public class analogClock extends JFrame implements Runnable{
              *m 60초 = 360도 → 1초 = [6도]
              */
 
-
-            g.drawString(hour+":"+min+":"+sec,this.getWidth()/2-20,this.getHeight()/2); //m 디지털 시간 출력
-
-
             int HourX = this.getWidth()/2 + (int) (90 * Math.cos( ToRadian ( (hour * 30) -90 + (min * 30/60) + (sec * 30/60/60) ) ));
             int HourY = this.getHeight()/2 + (int) (90 * Math.sin( ToRadian ( (hour * 30) -90 + (min * 30/60) + (sec * 30/60/60) ) ));
             g.setColor(Color.yellow);
@@ -119,6 +144,10 @@ public class analogClock extends JFrame implements Runnable{
             int SecY = this.getHeight()/2 + (int) (150 * Math.sin( ToRadian ( (sec * 6) -90) ));
             g.setColor(Color.BLUE);
             g.drawLine(this.getWidth()/2,this.getHeight()/2, SecX,SecY);
+
+            g.setColor(Color.GRAY);
+            g.setFont(new Font("나눔스퀘어", Font.BOLD, 20));
+            g.drawString(hour+":"+min+":"+sec,this.getWidth()/2-20,this.getHeight()/2+5); //m 디지털 시간 출력
 
         }
 
