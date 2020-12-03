@@ -3,6 +3,8 @@ package com.example.cocoaFinal;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -86,6 +88,13 @@ public class AlarmProgram extends JFrame implements Runnable{
             NormalMenu.setForeground(Color.yellow);
             AddAlarmMenu.add(QuickMenu);
             AddAlarmMenu.add(NormalMenu);
+
+            QuickMenu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("퀵알람");
+                }
+            });
         }
     }
 
@@ -94,22 +103,24 @@ public class AlarmProgram extends JFrame implements Runnable{
 
         AlarmListPanel(){
 
+
             ScrollPane sp = new ScrollPane();
 
-            Panel p = new Panel();
+            JPanel ListPanel = new JPanel();
             sp.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight/10*5)); //m AlarmListPanel 사이즈와 동일
-            p.setLayout(new GridLayout(1000,1,0,5));
+            ListPanel.setLayout(new GridLayout(1000,1,0,5));
 
-            JButton bt1 = new JButton("알람리스트1");
-            bt1.setPreferredSize(new Dimension(100,100));
-            p.add(bt1);
 
-            for(int i =2;i<100;i++) {
-                p.add(new JButton("알람리스트" + i));
-            }
-            sp.add(p);
+            GridContentPanel GridContentPanel = new GridContentPanel(15);
+
+            ListPanel.add(GridContentPanel);
+
+
+            sp.add(ListPanel);
 
             this.add(sp);
+
+
 
         }
 
@@ -122,6 +133,67 @@ public class AlarmProgram extends JFrame implements Runnable{
 
         }
     }
+
+    class GridContentPanel extends JPanel{
+
+        private int AlarmCount = 0;
+        GridContentPanel(int AlarmCount){
+
+           this.AlarmCount = AlarmCount;
+           this.setLayout(new GridLayout(1000,1,0,5));
+
+
+            /***
+             *   원하는 알람 박스를 만들기 위해, BorderLayout 레이아웃의  contentPanel을 배열로 설계한 뒤,  GridContentPanel에 grid 형식으로 차곡차곡 담는다.
+             */
+            JPanel[] contentPanel = new JPanel[AlarmCount];
+
+
+            JCheckBox[] AlarmCheck = new JCheckBox[this.AlarmCount];
+            JLabel[] setAlarmTimeLabel = new JLabel[this.AlarmCount];
+            JLabel[] setAlarmDayLabel = new JLabel[this.AlarmCount];
+            JButton[] AlarmSetting = new JButton[this.AlarmCount];
+
+
+
+            for(int i=0;i<this.AlarmCount;i++) {
+
+                contentPanel[i] = new JPanel();
+                contentPanel[i].setLayout(new BorderLayout());
+
+                contentPanel[i].add(AlarmCheck[i] = new JCheckBox(), "West");
+                contentPanel[i].add(setAlarmTimeLabel[i] = new JLabel("알람"+i), "Center");
+                contentPanel[i].add(setAlarmDayLabel[i] = new JLabel("시간"+i), "South");
+                contentPanel[i].add(AlarmSetting[i] = new JButton("버튼"+i), "East");
+
+                if(i%2==0) {
+                    contentPanel[i].setBackground(new Color(38, 30, 0));
+                    AlarmCheck[i].setBackground(new Color(38, 30, 0));
+                }
+                else{
+                    contentPanel[i].setBackground(new Color(147, 62, 0));
+                    AlarmCheck[i].setBackground(new Color(147, 62, 0));
+                }
+
+
+                setAlarmTimeLabel[i].setFont(new Font("나눔스퀘어", Font.BOLD, 20));
+                setAlarmTimeLabel[i].setForeground(Color.white);
+                setAlarmTimeLabel[i].setHorizontalAlignment(SwingConstants.CENTER);
+
+
+                setAlarmDayLabel[i].setFont(new Font("나눔스퀘어", Font.BOLD, 20));
+                setAlarmDayLabel[i].setForeground(Color.yellow);
+                setAlarmDayLabel[i].setHorizontalAlignment(SwingConstants.CENTER);
+
+
+                this.add(contentPanel[i]);
+
+            }
+        }
+
+
+    }
+
 
     class ClockPanel extends JPanel{
 
