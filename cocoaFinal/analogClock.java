@@ -62,10 +62,14 @@ public class analogClock extends JFrame implements Runnable{
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             i = i+100;
+
             g.clearRect(0,0,this.getWidth(),this.getHeight());
             g.setColor(Color.YELLOW); // 노란 색상 g.fillRect(50, 50, 300, 300); // 채우기
             g.fillRect(0,0,this.getWidth(),this.getHeight());
             g.setColor(Color.black); // 노란 색상 g.fillRect(50, 50, 300, 300); // 채우기
+
+
+
             g.drawLine(0,0,i,1200);
         }
 
