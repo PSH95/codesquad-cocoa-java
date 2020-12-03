@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class analogClock extends JFrame implements Runnable{
+public class AlarmProgram extends JFrame implements Runnable{
 
     private int i = 0;
     private final int ScreenWidth = 500;
@@ -20,7 +20,7 @@ public class analogClock extends JFrame implements Runnable{
     private int min = 0;
     private int sec = 0;
 
-    analogClock() throws IOException {
+    AlarmProgram() throws IOException {
         MenuBar menu = new MenuBar();
         this.setMenuBar(menu);
         Menu AddAlarmMenu = new Menu();
@@ -195,9 +195,9 @@ public class analogClock extends JFrame implements Runnable{
     }
 
     public static void main(String[] args) {
-        analogClock ClockFrame = null;
+        AlarmProgram ClockFrame = null;
         try {
-            ClockFrame = new analogClock();
+            ClockFrame = new AlarmProgram();
         } catch (IOException e) {
             e.printStackTrace();
         }
