@@ -12,7 +12,7 @@ public class AlarmProgram extends JFrame implements Runnable{
 
     private int i = 0;
     private final int ScreenWidth = 500;
-    private final int ScreenHeight = 900;
+    private final int ScreenHeight = 1000;
     private final Image clockBackground = ImageIO.read(new File("./resource/ClockBackground.png"));
 
     private GregorianCalendar time;
@@ -21,10 +21,6 @@ public class AlarmProgram extends JFrame implements Runnable{
     private int sec = 0;
 
     AlarmProgram() throws IOException {
-        MenuBar menu = new MenuBar();
-        this.setMenuBar(menu);
-        Menu AddAlarmMenu = new Menu();
-        menu.add(AddAlarmMenu);
         ClockInit();
     }
 
@@ -35,6 +31,10 @@ public class AlarmProgram extends JFrame implements Runnable{
         this.setLocationRelativeTo(null); // 화면 중앙
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        menuBar menuBar = new menuBar();
+
+        this.setJMenuBar(menuBar.menu);
 
         JPanel remainTimePanel = new JPanel();
         remainTimePanel.setLayout(new BorderLayout());
@@ -66,6 +66,29 @@ public class AlarmProgram extends JFrame implements Runnable{
 
         this.setVisible(true);
     }
+
+    class menuBar extends JMenuBar{
+        private JMenuBar menu;
+        menuBar(){
+            menu = new JMenuBar();
+            menu.setBackground(Color.DARK_GRAY);
+
+            JMenu AddAlarmMenu = new JMenu("추가(+)");
+            AddAlarmMenu.setBackground(Color.DARK_GRAY);
+            AddAlarmMenu.setForeground(Color.CYAN);
+            menu.add(AddAlarmMenu);
+
+            JMenuItem QuickMenu = new JMenuItem("퀵 알람");
+            JMenuItem NormalMenu = new JMenuItem("알람");
+            QuickMenu.setBackground(Color.DARK_GRAY);
+            QuickMenu.setForeground(Color.white);
+            NormalMenu.setBackground(Color.DARK_GRAY);
+            NormalMenu.setForeground(Color.yellow);
+            AddAlarmMenu.add(QuickMenu);
+            AddAlarmMenu.add(NormalMenu);
+        }
+    }
+
 
     class AlarmListPanel extends JPanel{
 
@@ -102,6 +125,18 @@ public class AlarmProgram extends JFrame implements Runnable{
 
     class ClockPanel extends JPanel{
 
+
+        /***
+         *m 삼감함수 공식을 이용한 아날로그 시계 알고리즘  ex) cos(theta) = R/x  → x = R*cos(theta)
+         *m 직교좌표계(CCW)와 아날로그 시계(CW)는 진행 방향 다르므로, 변환과정(-90도)이 필요
+         *m Math.cos 는 degree 가 아닌 Radian 연산을 하여 변환이 필요함.
+         *m cf) Time Shift: cos(x-pi/2) == sin(x)
+         *m 12시간 = 360도 → 1시간 = [30도]  → 60분 = 30도 → 1분 = [30/60도] → 60초 = 30/60 → 1초 = [30/60/60도]
+         *m 60분 = 360도 → 1분 = [6도] → 60초 = 6도 → 1초 = [6/60도]
+         *m 60초 = 360도 → 1초 = [6도]
+         */
+
+
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -118,16 +153,6 @@ public class AlarmProgram extends JFrame implements Runnable{
             g.drawImage(clockBackground,Clock_X,Clock_Y,this); //m 시계 배경 출력
 
             g.setColor(Color.black);
-
-            /***
-             *m 삼감함수 공식을 이용한 아날로그 시계 알고리즘  ex) cos(theta) = R/x  → x = R*cos(theta)
-             *m 직교좌표계(CCW)와 아날로그 시계(CW)는 진행 방향 다르므로, 변환과정(-90도)이 필요
-             *m Math.cos 는 degree 가 아닌 Radian 연산을 하여 변환이 필요함.
-             *m cf) Time Shift: cos(x-pi/2) == sin(x)
-             *m 12시간 = 360도 → 1시간 = [30도]  → 60분 = 30도 → 1분 = [30/60도] → 60초 = 30/60 → 1초 = [30/60/60도]
-             *m 60분 = 360도 → 1분 = [6도] → 60초 = 6도 → 1초 = [6/60도]
-             *m 60초 = 360도 → 1초 = [6도]
-             */
 
             int HourX = this.getWidth()/2 + (int) (90 * Math.cos( ToRadian ( (hour * 30) -90 + (min * 30/60) + (sec * 30/60/60) ) ));
             int HourY = this.getHeight()/2 + (int) (90 * Math.sin( ToRadian ( (hour * 30) -90 + (min * 30/60) + (sec * 30/60/60) ) ));
@@ -151,7 +176,7 @@ public class AlarmProgram extends JFrame implements Runnable{
 
         }
 
-        private double ToRadian(int degree) {
+        private double ToRadian(int degree) { //m degree -> radian
             double radian = 0.0;
             radian = degree * (Math.PI/180.0f);
             return radian;
