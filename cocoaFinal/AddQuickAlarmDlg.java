@@ -10,9 +10,9 @@ import java.awt.event.WindowEvent;
 public class AddQuickAlarmDlg extends JDialog implements Runnable{
 
 
+
     public static int[] SetTime = new int[2];
     private JLabel TimeTagLabel;
-
 
     public AddQuickAlarmDlg(JFrame frame, String title, boolean check) {
         super(frame,title,check);
@@ -57,7 +57,7 @@ public class AddQuickAlarmDlg extends JDialog implements Runnable{
                 btnTime[i].setIcon(changeIcon);
             }
 
-            btnTime[i].addActionListener(new btnAction());
+            btnTime[i].addActionListener(new DlgBtnAction());
         }
 
 
@@ -77,6 +77,8 @@ public class AddQuickAlarmDlg extends JDialog implements Runnable{
 
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+
                 SetTime[0]=0;
                 SetTime[1]=0;
                 setVisible(false);

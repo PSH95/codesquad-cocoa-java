@@ -3,10 +3,9 @@ package com.example.cocoaFinal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class btnAction implements ActionListener {
+public class DlgBtnAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-
 
 
         switch (e.getActionCommand()){
@@ -32,7 +31,9 @@ public class btnAction implements ActionListener {
             case "35분":
                 AddQuickAlarmDlg.SetTime[1] += 35;
                 break;
-            default:
+            default: //m 초기화
+                AddQuickAlarmDlg.SetTime[0] = 0;
+                AddQuickAlarmDlg.SetTime[1] = 0;
                 break;
 
 
