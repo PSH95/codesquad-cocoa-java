@@ -49,8 +49,9 @@ public class AlarmProgram extends JFrame {
         //m center panel 사이즈는 north/south 사이즈 조정후 자동으로 지정됨.
 
         this.add(remainTimePanel,"North");
-        this.add(AlarmListPanel,"South");
         this.add(ClockPanel,"Center");
+        this.add(AlarmListPanel,"South");
+
 
 
 

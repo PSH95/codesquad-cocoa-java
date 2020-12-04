@@ -12,25 +12,25 @@ public class btnAction implements ActionListener {
         switch (e.getActionCommand()){
 
             case "5분":
-                AddQuickAlarmDlg.SetMinute += 5;
+                AddQuickAlarmDlg.SetTime[1]+= 5;
                 break;
             case "10분":
-                AddQuickAlarmDlg.SetMinute += 10;
+                AddQuickAlarmDlg.SetTime[1] += 10;
                 break;
             case "15분":
-                AddQuickAlarmDlg.SetMinute += 15;
+                AddQuickAlarmDlg.SetTime[1] += 15;
                 break;
             case "20분":
-                AddQuickAlarmDlg.SetMinute += 20;
+                AddQuickAlarmDlg.SetTime[1] += 20;
                 break;
             case "25분":
-                AddQuickAlarmDlg.SetMinute += 25;
+                AddQuickAlarmDlg.SetTime[1] += 25;
                 break;
             case "30분":
-                AddQuickAlarmDlg.SetMinute += 30;
+                AddQuickAlarmDlg.SetTime[1] += 30;
                 break;
             case "35분":
-                AddQuickAlarmDlg.SetMinute += 35;
+                AddQuickAlarmDlg.SetTime[1] += 35;
                 break;
             default:
                 break;
