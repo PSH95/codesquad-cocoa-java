@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 
 class ClockPanel extends JPanel implements Runnable{
 
+    private Graphics2D g2d;
     private GregorianCalendar time;
     private int hour = 0;
     private int min = 0;
@@ -41,7 +42,10 @@ class ClockPanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        g2d = (Graphics2D)g;
+        g2d.setStroke(new BasicStroke(15, BasicStroke.CAP_ROUND, 0)); //m 라인 굵기
         this.setLayout(new BorderLayout());
+
 
         g.clearRect(0,0,this.getWidth(),this.getHeight());
         g.setColor(new Color(189,189,189));
@@ -56,23 +60,23 @@ class ClockPanel extends JPanel implements Runnable{
 
         int HourX = this.getWidth()/2 + (int) (90 * Math.cos( ToRadian ( (hour * 30) -90 + (min * 30/60) + (sec * 30/60/60) ) ));
         int HourY = this.getHeight()/2 + (int) (90 * Math.sin( ToRadian ( (hour * 30) -90 + (min * 30/60) + (sec * 30/60/60) ) ));
-        g.setColor(Color.yellow);
-        g.drawLine(this.getWidth()/2,this.getHeight()/2, HourX,HourY);
+        g2d.setColor(Color.yellow);
+        g2d.drawLine(this.getWidth()/2,this.getHeight()/2, HourX,HourY);
 
         int MinX = this.getWidth()/2 + (int) (120 * Math.cos( ToRadian ( (min * 6)-90+ (sec * 6/60) ) ));
         int MinY = this.getHeight()/2 + (int) (120 * Math.sin( ToRadian ( (min * 6)-90 + (sec * 6/60) ) ));
-        g.setColor(Color.RED);
-        g.drawLine(this.getWidth()/2,this.getHeight()/2, MinX,MinY);
+        g2d.setColor(Color.RED);
+        g2d.drawLine(this.getWidth()/2,this.getHeight()/2, MinX,MinY);
 
 
         int SecX = this.getWidth()/2 + (int) (150 * Math.cos( ToRadian ( (sec * 6) -90) ));
         int SecY = this.getHeight()/2 + (int) (150 * Math.sin( ToRadian ( (sec * 6) -90) ));
-        g.setColor(Color.BLUE);
-        g.drawLine(this.getWidth()/2,this.getHeight()/2, SecX,SecY);
+        g2d.setColor(Color.BLUE);
+        g2d.drawLine(this.getWidth()/2,this.getHeight()/2, SecX,SecY);
 
-        g.setColor(Color.GRAY);
+        g.setColor(Color.WHITE);
         g.setFont(new Font("나눔스퀘어", Font.BOLD, 20));
-        g.drawString(hour+":"+min+":"+sec,this.getWidth()/2-20,this.getHeight()/2+5); //m 디지털 시간 출력
+        g.drawString(hour+":"+min+":"+sec,20,50); //m 디지털 시간 출력
 
     }
 

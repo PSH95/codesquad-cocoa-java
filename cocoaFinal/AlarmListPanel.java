@@ -3,10 +3,12 @@ package com.example.cocoaFinal;
 import javax.swing.*;
 import java.awt.*;
 
-class AlarmListPanel extends JPanel {
+class AlarmListPanel extends JPanel implements Runnable{
 
     private final int ScreenWidth = 500;
     private final int ScreenHeight = 1000;
+    private GridContentPanel GridContentPanel;
+    private JPanel ListPanel;
 
     AlarmListPanel(){
 
@@ -16,13 +18,11 @@ class AlarmListPanel extends JPanel {
 
         ScrollPane sp = new ScrollPane();
 
-        JPanel ListPanel = new JPanel();
+        ListPanel = new JPanel();
         sp.setPreferredSize(new Dimension(ScreenWidth,ScreenHeight/10*5)); //m AlarmListPanel 사이즈와 동일
         ListPanel.setLayout(new GridLayout(1000,1,0,5));
 
-
-        GridContentPanel GridContentPanel = new GridContentPanel(15);
-
+        GridContentPanel = new GridContentPanel(15);
         ListPanel.add(GridContentPanel);
 
 
@@ -30,10 +30,23 @@ class AlarmListPanel extends JPanel {
 
         this.add(sp);
 
-
-
     }
 
+    @Override
+    public void run() {
+
+        while (true){
+            if(GridContentPanel!=null) {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 }
 
 class GridContentPanel extends JPanel{
@@ -53,7 +66,6 @@ class GridContentPanel extends JPanel{
 
         JCheckBox[] AlarmCheck = new JCheckBox[this.AlarmCount];
         JLabel[] setAlarmTimeLabel = new JLabel[this.AlarmCount];
-        // JLabel[] setAlarmDayLabel = new JLabel[this.AlarmCount];
         JButton[] AlarmSetting = new JButton[this.AlarmCount];
 
 
@@ -65,7 +77,6 @@ class GridContentPanel extends JPanel{
 
             contentPanel[i].add(AlarmCheck[i] = new JCheckBox(), "West");
             contentPanel[i].add(setAlarmTimeLabel[i] = new JLabel("AM "+(i+1)+":"+(i+10)), "Center");
-            // contentPanel[i].add(setAlarmDayLabel[i] = new JLabel("매일"), "South");
             contentPanel[i].add(AlarmSetting[i] = new JButton(), "East");
 
             ImageIcon icon = new ImageIcon("./resource/delete.png");
@@ -90,10 +101,6 @@ class GridContentPanel extends JPanel{
             setAlarmTimeLabel[i].setForeground(Color.white);
             setAlarmTimeLabel[i].setHorizontalAlignment(SwingConstants.CENTER);
 
-
-            //setAlarmDayLabel[i].setFont(new Font("나눔스퀘어", Font.BOLD, 20));
-            //setAlarmDayLabel[i].setForeground(Color.yellow);
-            //setAlarmDayLabel[i].setHorizontalAlignment(SwingConstants.CENTER);
 
 
             this.add(contentPanel[i]);

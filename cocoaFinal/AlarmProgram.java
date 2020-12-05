@@ -15,7 +15,7 @@ public class AlarmProgram extends JFrame {
     }
 
     private void ClockInit() {
-        this.setTitle("아날로그 시계");
+        this.setTitle("간단 알람");
         this.setSize(ScreenWidth,ScreenHeight);
 
         this.setLocationRelativeTo(null); // 화면 중앙
